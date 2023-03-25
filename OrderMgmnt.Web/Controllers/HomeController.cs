@@ -39,15 +39,25 @@ namespace OrderMgmnt.Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost]
-        public IActionResult PlaceOrder(OrderModel orderDetails)
+        [HttpPost("/{venderId}/{orderId}")]
+        public async Task<IActionResult> PlaceOrder(Guid venderId, Guid orderId, OrderModel orderDetails)
         {
-            var order = new Order
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null  || order.VenderId != venderId)
             {
-                ClientAddress = orderDetails.DeliverAddress,
-                ClientName = orderDetails.Name,
+                return BadRequest("Order not found!");
+            }
 
-            };
+            if (order.ClientFillDate != null)
+                return BadRequest("Order already is filled!");
+
+            order.ClientAddress = orderDetails.DeliverAddress;
+            order.ClientName = orderDetails.Name;
+            order.ClientPhoneNumber = orderDetails.PhoneNumber;
+            order.ClientPreferredDate = orderDetails.PreferedDate;
+            order.ClientFillDate = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
             return Ok();
         }
     }

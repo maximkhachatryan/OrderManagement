@@ -16,6 +16,8 @@ namespace OrderMgmnt.DAL.Models
         public string InstagramLink { get; set; }
         public string WebsiteLink { get; set; }
 
+        public decimal VenderWalletAmount { get; set; }
+
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

@@ -12,8 +12,12 @@ namespace OrderMgmnt.DAL.Models
         public string ClientName { get; set; }
         public string ClientPhoneNumber { get; set; }
         public string ClientAddress { get; set; }
-        public DateTime PreferredDate { get; set; }
-        public byte State { get; set; }
+        public DateTime? ClientPreferredDate { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public DateTime? ClientFillDate { get; set; }
+        public DateTime? VenderPreferredDate { get; set; }
+        public DateTime? OrderFinishDate { get; set; }
+        public DateTime? OrderCancelDate { get; set; }
         public Guid VenderId { get; set; }
 
 
