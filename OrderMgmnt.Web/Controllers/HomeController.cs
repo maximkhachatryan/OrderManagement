@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OrderMgmnt.DAL;
+using OrderMgmnt.DAL.Models;
 using OrderMgmnt.Web.Models;
 using OrderMgmnt.Web.Models.Home;
 using System;
@@ -13,10 +15,12 @@ namespace OrderMgmnt.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly OrderMgmntContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, OrderMgmntContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -35,10 +39,16 @@ namespace OrderMgmnt.Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        //[HttpPost]
-        //public IActionResult PlaceOrder(OrderModel orderDetails)
-        //{
-            
-        //}
+        [HttpPost]
+        public IActionResult PlaceOrder(OrderModel orderDetails)
+        {
+            var order = new Order
+            {
+                ClientAddress = orderDetails.DeliverAddress,
+                ClientName = orderDetails.Name,
+
+            };
+            return Ok();
+        }
     }
 }

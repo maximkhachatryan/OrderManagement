@@ -23,8 +23,7 @@ namespace OrderMgmnt.DAL
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.ClientFirstname).IsRequired();
-                entity.Property(e => e.ClientLastname).IsRequired();
+                entity.Property(e => e.ClientName).IsRequired();
                 entity.Property(e => e.ClientAddress).IsRequired();
                 entity.Property(e => e.ClientPhoneNumber).IsRequired();
                 entity.HasOne(d => d.Vender)
