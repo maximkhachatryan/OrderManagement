@@ -10,7 +10,7 @@ using OrderMgmnt.DAL;
 namespace OrderMgmnt.DAL.Migrations
 {
     [DbContext(typeof(OrderMgmntContext))]
-    [Migration("20230325150121_InitialCreate")]
+    [Migration("20230325153540_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,15 +49,12 @@ namespace OrderMgmnt.DAL.Migrations
                     b.Property<byte>("State")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("VenderId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("VenderId1")
+                    b.Property<Guid>("VenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VenderId1");
+                    b.HasIndex("VenderId");
 
                     b.ToTable("Orders");
                 });
@@ -97,7 +94,9 @@ namespace OrderMgmnt.DAL.Migrations
                 {
                     b.HasOne("OrderMgmnt.DAL.Models.Vender", "Vender")
                         .WithMany("Orders")
-                        .HasForeignKey("VenderId1");
+                        .HasForeignKey("VenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Vender");
                 });

@@ -35,24 +35,23 @@ namespace OrderMgmnt.DAL.Migrations
                     ClientAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PreferredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     State = table.Column<byte>(type: "tinyint", nullable: false),
-                    VenderId = table.Column<int>(type: "int", nullable: false),
-                    VenderId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    VenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Venders_VenderId1",
-                        column: x => x.VenderId1,
+                        name: "FK_Orders_Venders_VenderId",
+                        column: x => x.VenderId,
                         principalTable: "Venders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_VenderId1",
+                name: "IX_Orders_VenderId",
                 table: "Orders",
-                column: "VenderId1");
+                column: "VenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

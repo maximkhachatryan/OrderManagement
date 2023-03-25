@@ -15,7 +15,7 @@ namespace OrderMgmnt.DAL.Models
         public string ClientAddress { get; set; }
         public DateTime PreferredDate { get; set; }
         public byte State { get; set; }
-        public int VenderId { get; set; }
+        public Guid VenderId { get; set; }
 
 
         public Vender Vender { get; set; }
