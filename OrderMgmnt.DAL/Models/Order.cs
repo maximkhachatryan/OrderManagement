@@ -9,8 +9,8 @@ namespace OrderMgmnt.DAL.Models
     public class Order
     {
         public Guid Id { get; set; }
-        public string ClientName { get; set; }
-        public string ClientSurname { get; set; }
+        public string ClientFirstname { get; set; }
+        public string ClientLastname { get; set; }
         public string ClientPhoneNumber { get; set; }
         public string ClientAddress { get; set; }
         public DateTime PreferredDate { get; set; }

@@ -10,9 +10,32 @@ namespace OrderMgmnt.DAL
 {
     public class OrderMgmntContext : DbContext
     {
+        public OrderMgmntContext(DbContextOptions options) : base(options)
+        {
+        }
+
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Vender> Venders { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.Property(e => e.ClientFirstname).IsRequired();
+                entity.Property(e => e.ClientLastname).IsRequired();
+                entity.Property(e => e.ClientAddress).IsRequired();
+                entity.Property(e => e.ClientPhoneNumber).IsRequired();
+                entity.HasOne(d => d.Vender)
+                  .WithMany(p => p.Orders);
+            });
+
+            modelBuilder.Entity<Vender>(entity =>
+            {
+                entity.Property(e => e.PhoneNumber1).IsRequired();
+                entity.Property(e => e.BrandName).IsRequired();
+            });
+        }
     }
 }

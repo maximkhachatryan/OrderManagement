@@ -13,6 +13,8 @@ namespace OrderMgmnt.DAL.Models
         public string Name { get; set; }
         public string PhoneNumber1 { get; set; }
         public string PhoneNumber2 { get; set; }
+        public string InstagramLink { get; set; }
+        public string WebsiteLink { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
     }
