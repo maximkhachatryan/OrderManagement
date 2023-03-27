@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using OrderMgmnt.DAL;
 using OrderMgmnt.DAL.Models;
 using OrderMgmnt.Web.Models;
-using OrderMgmnt.Web.Models.Home;
+using OrderMgmnt.Web.Models.PlaceOrder;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace OrderMgmnt.Web.Controllers
 {
-    public class HomeController : Controller
+    public class PlaceOrderController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<PlaceOrderController> _logger;
         private readonly OrderMgmntContext _context;
 
-        public HomeController(ILogger<HomeController> logger, OrderMgmntContext context)
+        public PlaceOrderController(ILogger<PlaceOrderController> logger, OrderMgmntContext context)
         {
             _logger = logger;
             _context = context;

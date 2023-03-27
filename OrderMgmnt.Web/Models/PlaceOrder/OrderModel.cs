@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OrderMgmnt.Web.Models.Home
+namespace OrderMgmnt.Web.Models.PlaceOrder
 {
     public class OrderModel
     {
