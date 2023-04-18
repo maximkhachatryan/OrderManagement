@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderMgmnt.DAL;
 
 namespace OrderMgmnt.DAL.Migrations
 {
     [DbContext(typeof(OrderMgmntContext))]
-    partial class OrderMgmntContextModelSnapshot : ModelSnapshot
+    [Migration("20230418184819_RequiredVenderId")]
+    partial class RequiredVenderId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace OrderMgmnt.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("VenderId")
+                    b.Property<Guid?>("VenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -141,9 +143,7 @@ namespace OrderMgmnt.DAL.Migrations
                 {
                     b.HasOne("OrderMgmnt.DAL.Models.Vender", "Vender")
                         .WithMany()
-                        .HasForeignKey("VenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VenderId");
 
                     b.Navigation("Vender");
                 });

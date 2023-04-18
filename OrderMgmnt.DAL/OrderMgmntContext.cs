@@ -16,6 +16,8 @@ namespace OrderMgmnt.DAL
 
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Vender> Venders { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +36,16 @@ namespace OrderMgmnt.DAL
             {
                 entity.Property(e => e.PhoneNumber1).IsRequired();
                 entity.Property(e => e.BrandName).IsRequired();
+
+                entity.Property(e => e.VenderWalletAmount).HasPrecision(12, 2);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.UserName).IsRequired();
+                entity.Property(e => e.PasswordHash).IsRequired();
+                entity.HasIndex(e => e.UserName);
+                entity.HasOne(e => e.Vender).WithMany().IsRequired();
             });
         }
     }

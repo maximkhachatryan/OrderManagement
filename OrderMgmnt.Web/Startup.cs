@@ -29,7 +29,7 @@ namespace OrderMgmnt.Web
             services.AddControllersWithViews();
             services.AddDbContext<OrderMgmntContext>(options =>
             {
-                options.UseSqlServer("sdfd");
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             }
             );
         }
