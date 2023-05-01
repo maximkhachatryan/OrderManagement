@@ -32,11 +32,27 @@ namespace OrderMgmnt.Web
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             }
             );
+
+            services.AddCors(options => options.AddDefaultPolicy(
+                builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //    app.Use(async (context, next) =>
+            //    {
+
+            //        // Call the next delegate/middleware in the pipeline.
+            //        await next();
+            //    });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -47,10 +63,15 @@ namespace OrderMgmnt.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthorization();
 
