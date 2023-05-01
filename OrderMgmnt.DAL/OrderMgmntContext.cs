@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OrderMgmnt.DAL.Models;
+using OrderMgmnt.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +17,8 @@ namespace OrderMgmnt.DAL
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Vender> Venders { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<VenderAddress> VenderAddresses { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,6 +40,7 @@ namespace OrderMgmnt.DAL
                 entity.Property(e => e.BrandName).IsRequired();
 
                 entity.Property(e => e.VenderWalletAmount).HasPrecision(12, 2);
+                entity.HasMany(e => e.Addresses).WithOne().IsRequired();
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -46,6 +49,11 @@ namespace OrderMgmnt.DAL
                 entity.Property(e => e.PasswordHash).IsRequired();
                 entity.HasIndex(e => e.UserName);
                 entity.HasOne(e => e.Vender).WithMany().IsRequired();
+            });
+
+            modelBuilder.Entity<VenderAddress>(entity =>
+            {
+                entity.Property(e => e.AddressInfo).IsRequired();
             });
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OrderMgmnt.DAL;
-using OrderMgmnt.DAL.Models;
+using OrderMgmnt.DAL.Entities;
 using OrderMgmnt.Web.Models;
 using OrderMgmnt.Web.Models.PlaceOrder;
 using System;

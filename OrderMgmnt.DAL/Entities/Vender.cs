@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OrderMgmnt.DAL.Models
+namespace OrderMgmnt.DAL.Entities
 {
     public class Vender
     {
@@ -19,5 +19,7 @@ namespace OrderMgmnt.DAL.Models
         public decimal VenderWalletAmount { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<VenderAddress> Addresses { get; set; }
+
     }
 }

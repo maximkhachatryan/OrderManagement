@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OrderMgmnt.DAL.Models
+namespace OrderMgmnt.DAL.Entities
 {
     public class User
     {
