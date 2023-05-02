@@ -28,11 +28,12 @@ namespace OrderMgmnt.Web.Controllers
             var user = await _dbContext.Users
                 .Where(u => u.UserName == loginRequest.UserName)
                 .AsNoTracking()
+                .Include(u=>u.Vender)
                 .FirstOrDefaultAsync();
             if (user == null || user.PasswordHash != loginRequest.PasswordHash)
                 return BadRequest("Login failed");
 
-            return Ok();
+            return Ok(user.Vender.Id);
         }
     }
 }
