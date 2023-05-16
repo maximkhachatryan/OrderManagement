@@ -30,7 +30,7 @@ namespace OrderMgmnt.DAL
                 entity.Property(e => e.ClientName).IsRequired();
                 entity.Property(e => e.ClientAddress).IsRequired();
                 entity.Property(e => e.ClientPhoneNumber).IsRequired();
-                entity.HasOne(d => d.Vender)
+                entity.HasOne(d => d.VenderAddress)
                   .WithMany(p => p.Orders);
             });
 

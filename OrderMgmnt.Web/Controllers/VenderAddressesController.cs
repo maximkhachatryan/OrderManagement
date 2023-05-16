@@ -23,8 +23,8 @@ namespace OrderMgmnt.Web.Controllers
         [Route("{venderId}")]
         public async Task<IActionResult> GetVenderAddresses(Guid venderId)
         {
-            var vender = await _dbContext.Venders.AsNoTracking().Include(x=>x.Addresses).FirstAsync(v=>v.Id == venderId);
-            var addresses = vender.Addresses.ToList();
+            var vender = await _dbContext.Venders.AsNoTracking().Include(x => x.Addresses).FirstAsync(v => v.Id == venderId);
+            var addresses = vender.Addresses.Where(a => !a.IsRemoved).ToList();
             return Ok(addresses);
         }
 
@@ -76,7 +76,8 @@ namespace OrderMgmnt.Web.Controllers
                 .FirstAsync(v => v.Id == venderId);
 
             var address = vender.Addresses.First(x => x.Id == dto.Id);
-            vender.Addresses.Remove(address);
+            address.IsRemoved = true;
+
             await _dbContext.SaveChangesAsync();
 
             return Ok();

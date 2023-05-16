@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderMgmnt.DAL;
 
 namespace OrderMgmnt.DAL.Migrations
 {
     [DbContext(typeof(OrderMgmntContext))]
-    partial class OrderMgmntContextModelSnapshot : ModelSnapshot
+    [Migration("20230516165541_Add_IsDeleted_Flag")]
+    partial class Add_IsDeleted_Flag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,39 +48,21 @@ namespace OrderMgmnt.DAL.Migrations
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeliveryPaymentByClient")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("OrderCancelDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("OrderFinishDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OtherNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PickUpDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ProductDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("ProductPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("ShouldProductPriceBePaid")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("VenderAddressId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("VenderId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("VenderPreferredDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("VenderAddressId");
+                    b.HasIndex("VenderId");
 
                     b.ToTable("Orders");
                 });
@@ -172,11 +156,13 @@ namespace OrderMgmnt.DAL.Migrations
 
             modelBuilder.Entity("OrderMgmnt.DAL.Entities.Order", b =>
                 {
-                    b.HasOne("OrderMgmnt.DAL.Entities.VenderAddress", "VenderAddress")
+                    b.HasOne("OrderMgmnt.DAL.Entities.Vender", "Vender")
                         .WithMany("Orders")
-                        .HasForeignKey("VenderAddressId");
+                        .HasForeignKey("VenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("VenderAddress");
+                    b.Navigation("Vender");
                 });
 
             modelBuilder.Entity("OrderMgmnt.DAL.Entities.User", b =>
@@ -202,10 +188,7 @@ namespace OrderMgmnt.DAL.Migrations
             modelBuilder.Entity("OrderMgmnt.DAL.Entities.Vender", b =>
                 {
                     b.Navigation("Addresses");
-                });
 
-            modelBuilder.Entity("OrderMgmnt.DAL.Entities.VenderAddress", b =>
-                {
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

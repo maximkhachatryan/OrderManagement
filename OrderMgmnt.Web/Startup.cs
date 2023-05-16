@@ -46,12 +46,15 @@ namespace OrderMgmnt.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //    app.Use(async (context, next) =>
-            //    {
-
-            //        // Call the next delegate/middleware in the pipeline.
-            //        await next();
-            //    });
+            app.Use(async (context, next) =>
+            {
+                //using (StreamReader reader = new StreamReader(context.Request.Body))
+                //{
+                //    string requestBodyString = await reader.ReadToEndAsync();
+                //}
+                // Call the next delegate/middleware in the pipeline.
+                await next();
+            });
 
             if (env.IsDevelopment())
             {

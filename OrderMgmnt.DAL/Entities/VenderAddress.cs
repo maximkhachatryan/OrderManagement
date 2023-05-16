@@ -11,9 +11,12 @@ namespace OrderMgmnt.DAL.Entities
         public Guid Id { get; set; }
         public AdministrativeDistrict District { get; set; }
         public string AddressInfo { get; set; }
+        public bool IsRemoved { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
 
 
-    public enum AdministrativeDistrict
+        public enum AdministrativeDistrict
         {
             Kentron = 1,
             Arabkir = 2,
