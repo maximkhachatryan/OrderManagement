@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderMgmnt.DAL;
 
 namespace OrderMgmnt.DAL.Migrations
 {
     [DbContext(typeof(OrderMgmntContext))]
-    partial class OrderMgmntContextModelSnapshot : ModelSnapshot
+    [Migration("20230523192602_OrderEntityChanged")]
+    partial class OrderEntityChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,13 +65,12 @@ namespace OrderMgmnt.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("ProductPrice")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("ShouldProductPriceBePaid")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("VenderAddressId")
+                    b.Property<Guid?>("VenderAddressId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -170,9 +171,7 @@ namespace OrderMgmnt.DAL.Migrations
                 {
                     b.HasOne("OrderMgmnt.DAL.Entities.VenderAddress", "VenderAddress")
                         .WithMany("Orders")
-                        .HasForeignKey("VenderAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VenderAddressId");
 
                     b.Navigation("VenderAddress");
                 });

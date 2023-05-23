@@ -27,11 +27,10 @@ namespace OrderMgmnt.DAL
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.ClientName).IsRequired();
-                entity.Property(e => e.ClientAddress).IsRequired();
-                entity.Property(e => e.ClientPhoneNumber).IsRequired();
+                entity.Property(e => e.ProductDescription).IsRequired();
+                entity.Property(b => b.ProductPrice).HasPrecision(10, 2);
                 entity.HasOne(d => d.VenderAddress)
-                  .WithMany(p => p.Orders);
+                  .WithMany(p => p.Orders).IsRequired();
             });
 
             modelBuilder.Entity<Vender>(entity =>

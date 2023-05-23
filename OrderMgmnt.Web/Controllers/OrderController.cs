@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace OrderMgmnt.Web.Controllers
 {
+    [Route("api/[controller]")]
     public class OrderController : Controller
     {
         private readonly ILogger<OrderController> _logger;
@@ -41,7 +42,7 @@ namespace OrderMgmnt.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PlaceOrder(PlaceOrderRequestDTO request)
+        public async Task<IActionResult> PlaceOrder([FromBody]PlaceOrderRequestDTO request)
         {
             var venderAddress = await _context.VenderAddresses.FindAsync(request.VenderAddressId);
             if (venderAddress == null)
