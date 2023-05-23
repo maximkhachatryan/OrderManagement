@@ -59,6 +59,7 @@ namespace OrderMgmnt.Web.Controllers
                 IsDeliveryPaymentByClient = request.IsDeliveryPaymentByClient,
                 ShouldProductPriceBePaid = request.ShouldProductPriceBePaid,
                 ProductPrice = request.ProductPrice,
+                OtherNotes = request.OtherNotes,
                 CreateDate = DateTime.Now
             };
 
