@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OrderMgmnt.DAL;
 using OrderMgmnt.DAL.Entities;
+using OrderMgmnt.Web.Helpers;
 using OrderMgmnt.Web.Models;
 using OrderMgmnt.Web.Models.Order;
 using OrderMgmnt.Web.Models.PlaceOrder;
@@ -25,24 +27,57 @@ namespace OrderMgmnt.Web.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        //public IActionResult Privacy()
+        //{
+        //    return View();
+        //}
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
+
+        [HttpGet]
+        [Route("{venderId}")]
+        public async Task<IActionResult> GetAllOrders(Guid venderId)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var venderExists = await _context.Venders.AnyAsync(v => v.Id == venderId);
+            if (!venderExists)
+                return BadRequest("Vender not found!");
+
+            var orders = _context.Venders
+                .Include(x => x.Addresses)
+                .ThenInclude(x => x.Orders)
+                .SelectMany(v => v.Addresses)
+                .Where(a => !a.IsRemoved)
+                .SelectMany(a => a.Orders)
+                .OrderByDescending(x => x.CreateDate)
+                .Select(o => new
+                {
+                    o.ProductDescription,
+                    o.CreateDate,
+                    o.Id,
+                    o.IsDeliveryPaymentByClient,
+                    o.OtherNotes,
+                    PickUpDate = o.DesiredPickUpDate,
+                    o.ProductPrice,
+                    o.ShouldProductPriceBePaid,
+                    VenderAddressId = o.VenderAddress.Id,
+                    Status = o.GetOrderStatus()
+                })
+                .ToList();
+
+            return Ok(orders);
         }
 
         [HttpPost]
-        public async Task<IActionResult> PlaceOrder([FromBody]PlaceOrderRequestDTO request)
+        public async Task<IActionResult> PlaceOrder([FromBody] PlaceOrderRequestDTO request)
         {
             var venderAddress = await _context.VenderAddresses.FindAsync(request.VenderAddressId);
             if (venderAddress == null)
@@ -55,7 +90,7 @@ namespace OrderMgmnt.Web.Controllers
                 Id = Guid.NewGuid(),
                 ProductDescription = request.ProductDescription,
                 VenderAddress = venderAddress,
-                PickUpDate = request.PickUpDate,
+                DesiredPickUpDate = request.PickUpDate,
                 IsDeliveryPaymentByClient = request.IsDeliveryPaymentByClient,
                 ShouldProductPriceBePaid = request.ShouldProductPriceBePaid,
                 ProductPrice = request.ProductPrice,
