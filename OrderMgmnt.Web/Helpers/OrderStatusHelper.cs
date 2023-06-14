@@ -17,11 +17,11 @@ namespace OrderMgmnt.Web.Helpers
             if (order.ClientRejectDate != null)
                 return OrderStatus.RejectedByClient;
 
+            if (order.DeliveryEndDate != null)
+                return OrderStatus.Delivered;
+
             if (order.DeliveryStartDate != null)
                 return OrderStatus.DeliveryStarted;
-
-            if (order.ActualPickUpDate != null)
-                return OrderStatus.PickedUp;
 
             if (order.ActualPickUpDate != null)
                 return OrderStatus.PickedUp;

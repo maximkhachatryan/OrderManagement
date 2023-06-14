@@ -13,7 +13,8 @@ namespace OrderMgmnt.Web.Enums
         Rejected = 3,
         PickedUp = 4,
         DeliveryStarted = 5,
-        RejectedByClient = 6,
-        SentBackToVender = 7
+        Delivered = 6,
+        RejectedByClient = 7,
+        SentBackToVender = 8
     }
 }

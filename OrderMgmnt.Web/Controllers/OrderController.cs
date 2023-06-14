@@ -65,10 +65,15 @@ namespace OrderMgmnt.Web.Controllers
                     o.Id,
                     o.IsDeliveryPaymentByClient,
                     o.OtherNotes,
-                    PickUpDate = o.DesiredPickUpDate,
+                    o.DesiredPickUpDate,
                     o.ProductPrice,
                     o.ShouldProductPriceBePaid,
-                    VenderAddressId = o.VenderAddress.Id,
+                    VenderAddress = new
+                    {
+                        Id = o.VenderAddress.Id,
+                        o.VenderAddress.District,
+                        o.VenderAddress.AddressInfo
+                    },
                     Status = o.GetOrderStatus()
                 })
                 .ToList();

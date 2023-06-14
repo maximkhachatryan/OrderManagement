@@ -44,6 +44,11 @@ namespace OrderMgmnt.DAL.Entities
         public DateTime? DeliveryStartDate { get; set; }
 
         /// <summary>
+        /// This field will be set when the courier delivers the product and returns back to the office
+        /// </summary>
+        public DateTime? DeliveryEndDate { get; set; }
+
+        /// <summary>
         /// This field will be set when the courier brings the product back to the office because of client rejection
         /// </summary>
         public DateTime? ClientRejectDate { get; set; }
