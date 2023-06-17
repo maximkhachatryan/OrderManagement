@@ -171,6 +171,7 @@ iframe {
 [  ]*/
 .contact1-pic {
   width: 296px;
+  display: flex;
 }
 
 .contact1-pic img {
@@ -354,11 +355,12 @@ textarea.input1 + .shadow-input1 {
   }
 
   .contact1-pic {
-    display: none;
+	width: 100%;
+	margin: 30px;
   }
 
   .contact1-form {
-    width: 100%;
+	width: 100%;
   }
 }
 
