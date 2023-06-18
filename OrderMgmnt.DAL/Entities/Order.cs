@@ -62,8 +62,8 @@ namespace OrderMgmnt.DAL.Entities
         public string ClientName { get; set; }
         public string ClientPhoneNumber { get; set; }
         public string ClientAddress { get; set; }
-        public DateTime? ClientPreferredDate { get; set; }
-        
+        public string ClientNotes { get; set; }
+
 
         public VenderAddress VenderAddress { get; set; }
     }

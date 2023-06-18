@@ -1,104 +1,44 @@
-﻿@{
-    Layout = null;
- }
+﻿@model OrderMgmnt.Web.Models.ReceiverFillOrder.ReceiverFillOrderModel
+@{
+    Layout = "~/Views/Shared/_Layout_ReceiverOrder.cshtml";
+}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Contact V1</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/fontawesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/lib/animate.css/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/lib/hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/lib/select2/css/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/css/receiverOrder/util.css">
-    <link rel="stylesheet" type="text/css" href="~/css/receiverOrder/main.css">
-    <!--===============================================================================================-->
-</head>
-<body>
 
-    <div class="contact1">
-        <div class="container-contact1">
-            <div class="contact1-pic js-tilt" data-tilt>
-                <img src="~/images/img-01.png" class="mx-auto" alt="IMG">
-            </div>
+<form asp-action="FillOrder" class="contact1-form validate-form">
+    @Html.AntiForgeryToken()
+    <span class="contact1-form-title">
+        Դուք պատվիրել եք <span style="font-weight: bold;">@Model.ProductDescription</span>։
+        Խնդրում ենք լրացնել ձեր տվյալները առաքումն իրականացնելու համար
+    </span>
 
-            <form class="contact1-form validate-form">
-                <span class="contact1-form-title">
-                    Խնդրում ենք լրացնել ձեր առաքման տվյալները
-                </span>
-
-                <div class="wrap-input1 validate-input" data-validate="Անուն/Ազգանուն դաշտը պարտադիր է">
-                    <input class="input1" type="text" name="name" placeholder="Անուն/Ազգանուն">
-                    <span class="shadow-input1"></span>
-                </div>
-
-                <div class="wrap-input1 validate-input" data-validate="Առաքման հասցե դաշտը պարտադիր է">
-                    <input class="input1" type="text" name="address" placeholder="Առաքման հասցե" />
-                    <span class="shadow-input1"></span>
-                </div>
-
-                <div class="wrap-input1 validate-input" data-validate="Հեռախոսահամար դաշտը պարտադիր է">
-                    <input class="input1" type="text" name="phone" placeholder="Հեռախոսահամար">
-                    <span class="shadow-input1"></span>
-                </div>
-
-                <div class="wrap-input1 validate-input">
-                    <textarea class="input1" name="message" placeholder="Այլ նշումներ"></textarea>
-                    <span class="shadow-input1"></span>
-                </div>
-
-                <div class="container-contact1-form-btn">
-                    <button class="contact1-form-btn">
-                        <span>
-                            Ուղարկել
-                        </span>
-                    </button>
-                </div>
-            </form>
-        </div>
+    <div class="wrap-input1 validate-input" data-validate="Անուն/Ազգանուն դաշտը պարտադիր է">
+        <input asp-for="ReceiverName" class="input1" type="text" placeholder="Անուն/Ազգանուն">
+        <span class="shadow-input1"></span>
     </div>
 
+    <div class="wrap-input1 validate-input" data-validate="Առաքման հասցե դաշտը պարտադիր է">
+        <input asp-for="ReceiverAddress" class="input1" type="text" placeholder="Առաքման հասցե" />
+        <span class="shadow-input1"></span>
+    </div>
 
+    <div class="wrap-input1 validate-input" data-validate="Հեռախոսահամար դաշտը պարտադիր է">
+        <input asp-for="ReceiverPhoneNumber" class="input1" type="text" placeholder="Հեռախոսահամար">
+        <span class="shadow-input1"></span>
+    </div>
 
+    <div class="wrap-input1 validate-input">
+        <textarea asp-for="Notes" class="input1" placeholder="Այլ նշումներ"></textarea>
+        <span class="shadow-input1"></span>
+    </div>
 
-    <!--===============================================================================================-->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="~/lib/bootstrap/js/src/popover.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="~/lib/select2/js/select2.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="~/lib/tilt.js/tilt.jquery.min.js"></script>
-    <script>
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-    </script>
+    <input type="hidden" asp-for="OrderId" />
+    <input type="hidden" asp-for="ProductDescription" />
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-    <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-23581568-13');
-    </script>
-
-    <!--===============================================================================================-->
-    <script src="js/main.js"></script>
-
-</body>
-</html>
+    <div class="container-contact1-form-btn">
+        <button type="submit" class="contact1-form-btn">
+            <span>
+                Ուղարկել
+            </span>
+        </button>
+    </div>
+</form>
