@@ -39,7 +39,7 @@ namespace OrderMgmnt.DAL
                 entity.Property(e => e.BrandName).IsRequired();
 
                 entity.Property(e => e.VenderWalletAmount).HasPrecision(12, 2);
-                entity.HasMany(e => e.Addresses).WithOne().IsRequired();
+                entity.HasMany(e => e.Addresses).WithOne(a=>a.Vender).IsRequired();
             });
 
             modelBuilder.Entity<User>(entity =>

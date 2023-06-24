@@ -14,7 +14,7 @@ namespace OrderMgmnt.DAL.Entities
         public bool IsRemoved { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
-
+        public virtual Vender Vender { get; set; }
 
         public enum AdministrativeDistrict
         {
