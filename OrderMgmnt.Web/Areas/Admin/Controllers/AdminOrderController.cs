@@ -36,16 +36,18 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
             }));
         }
 
-        // GET: Admin/AdminOrders/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        // GET: Admin/AdminOrder/Details/5
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
+            var idGuid = Guid.Parse(id);
+
             var order = await _context.Orders
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == idGuid);
             if (order == null)
             {
                 return NotFound();

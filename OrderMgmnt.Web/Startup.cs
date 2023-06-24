@@ -83,7 +83,7 @@ namespace OrderMgmnt.Web
                 endpoints.MapAreaControllerRoute(
                   name: "Admin",
                   areaName: "Admin",
-                  pattern: "Admin/{controller=AdminOrder}/{action=Index}");
+                  pattern: "Admin/{controller=AdminOrder}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
