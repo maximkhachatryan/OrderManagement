@@ -16,7 +16,7 @@ namespace OrderMgmnt.DAL.Entities
         public decimal? ProductPrice { get; set; }
         public string OtherNotes { get; set; }
 
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
 
         /// <summary>
         /// This field will be set when the client fills the delivery details
@@ -62,6 +62,7 @@ namespace OrderMgmnt.DAL.Entities
         public string ClientName { get; set; }
         public string ClientPhoneNumber { get; set; }
         public string ClientAddress { get; set; }
+        public DateTime? ClientChangeDeliveryDate { get; set; }
         public string ClientNotes { get; set; }
 
 

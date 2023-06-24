@@ -1,133 +1,211 @@
-﻿@model OrderMgmnt.DAL.Entities.Order
+﻿@model OrderMgmnt.Web.Areas.Admin.Models.AdminOrderDetailsModel
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Պատվեր № *</h1>
 
 <div>
-    <h4>Order</h4>
+    <h4>Կարգավիճակ - @Model.Status</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.OrderCreated)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.OrderCreated)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Vender)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Vender)
+        </dd>
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.ProductDescription)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.ProductDescription)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DesiredPickUpDate)
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.PickupAddress)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DesiredPickUpDate)
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.PickupAddress)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsDeliveryPaymentByClient)
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.DesiredPickupDate)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsDeliveryPaymentByClient)
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.DesiredPickupDate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ShouldProductPriceBePaid)
+        <dt class="col-sm-4">
+            Ստացողից գանձել
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ShouldProductPriceBePaid)
+        <dd class="col-sm-8">
+            @{
+                var receiverChargeText = string.Empty;
+                if (Model.ProductPrice != null)
+                {
+                    receiverChargeText += $"{Model.ProductPrice} դր․";
+                    if (Model.DeliveryPrice != 0)
+                        receiverChargeText += $" + {Model.DeliveryPrice} դր․(առաքման վճար)";
+                }
+                else if (Model.DeliveryPrice != 0)
+                    receiverChargeText += $"{Model.DeliveryPrice} դր․(առաքման վճար)";
+            }
+            @receiverChargeText
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductPrice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductPrice)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OtherNotes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OtherNotes)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreateDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClientFillDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClientFillDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AcceptDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AcceptDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RejectDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RejectDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ActualPickUpDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ActualPickUpDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeliveryStartDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeliveryStartDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeliveryEndDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeliveryEndDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClientRejectDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClientRejectDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SentBackToVenderDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SentBackToVenderDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClientName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClientName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClientPhoneNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClientPhoneNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClientAddress)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClientAddress)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClientNotes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClientNotes)
-        </dd>
+        @if (Model.ReceiverNotes != null)
+        {
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.VenderNotes)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.VenderNotes)
+            </dd>
+        }
     </dl>
+    <hr />
+    @if (Model.ReceiverAcceptDate != null)
+    {
+        <dl class="row">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.ReceiverAcceptDate)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.ReceiverAcceptDate)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.ReceiverName)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.ReceiverName)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.ReceiverAddress)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.ReceiverAddress)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.ReceiverPhoneNumber)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.ReceiverPhoneNumber)
+            </dd>
+
+            @if (Model.ReceiverChangeDeliveryDate != null)
+            {
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.ReceiverChangeDeliveryDate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.ReceiverChangeDeliveryDate)
+                </dd>
+            }
+
+            @if (Model.ReceiverNotes != null)
+            {
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.ReceiverNotes)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.ReceiverNotes)
+                </dd>
+            }
+        </dl>
+        @if (Model.AcceptDate != null)
+        {
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.AcceptDate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.AcceptDate)
+                </dd>
+            </dl>
+            @if (Model.ActualPickUpDate != null)
+            {
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.ActualPickUpDate)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.ActualPickUpDate)
+                    </dd>
+                </dl>
+                @if (Model.DeliveryStartDate != null)
+                {
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.DeliveryStartDate)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.DeliveryStartDate)
+                        </dd>
+                    </dl>
+                    @if (Model.SuccessfulDeliveryDate != null)
+                    {
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.SuccessfulDeliveryDate)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.SuccessfulDeliveryDate)
+                            </dd>
+                        </dl>
+                    }
+                    else if (Model.ReceiverRejectionDate != null)
+                    {
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.ReceiverRejectionDate)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.ReceiverRejectionDate)
+                            </dd>
+                        </dl>
+                        @if (Model.ReturnBackToVenderDate != null)
+                        {
+                            <hr />
+                            <dl class="row">
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.ReturnBackToVenderDate)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.ReturnBackToVenderDate)
+                                </dd>
+                            </dl>
+                        }
+                    }
+                }
+            }
+        }
+        @if (Model.RejectDate != null)
+        {
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.RejectDate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.RejectDate)
+                </dd>
+            </dl>
+        }
+    }
+
+
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.OrderId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

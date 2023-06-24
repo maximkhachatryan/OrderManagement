@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrderMgmnt.DAL;
 using OrderMgmnt.DAL.Entities;
 using OrderMgmnt.Web.Areas.Admin.Models;
+using OrderMgmnt.Web.Enums;
+using OrderMgmnt.Web.Helpers;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using static OrderMgmnt.DAL.Entities.VenderAddress;
 
 namespace OrderMgmnt.Web.Areas.Admin.Controllers
 {
@@ -25,12 +26,13 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var orders = await _context.Orders
-                .Include(o=>o.VenderAddress)
-                .ThenInclude(a=>a.Vender)
+                .Include(o => o.VenderAddress)
+                .ThenInclude(a => a.Vender)
                 .ToListAsync();
-            return View(orders.Select(o=>new AdminOrderListItemModel {
+            return View(orders.Select(o => new AdminOrderListItemModel
+            {
                 Id = o.Id,
-                CreationDate = o.CreateDate.Value,
+                CreationDate = o.CreateDate,
                 ProductDescription = o.ProductDescription,
                 Sender = o.VenderAddress.Vender.Name
             }));
@@ -44,16 +46,47 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var idGuid = Guid.Parse(id);
+            var parsed = Guid.TryParse(id, out var idGuid);
+            if (!parsed)
+            {
+                return NotFound();
+            }
 
             var order = await _context.Orders
+                .Include(o => o.VenderAddress)
+                .ThenInclude(a => a.Vender)
                 .FirstOrDefaultAsync(m => m.Id == idGuid);
             if (order == null)
             {
                 return NotFound();
             }
 
-            return View(order);
+            return View(new AdminOrderDetailsModel
+            {
+                AcceptDate = order.AcceptDate,
+                ActualPickUpDate = order.ActualPickUpDate,
+                DeliveryPrice = order.IsDeliveryPaymentByClient ? 1500.00M : 0,
+                DeliveryStartDate = order.DeliveryStartDate,
+                OrderCreated = order.CreateDate,
+                OrderId = order.Id,
+                PickupAddress = $"ք․ Երևան, {EnumHelper<AdministrativeDistrict>.GetDisplayValue(order.VenderAddress.District)}, {order.VenderAddress.AddressInfo}",
+                DesiredPickupDate = order.DesiredPickUpDate,
+                ProductDescription = order.ProductDescription,
+                ProductPrice = order.ProductPrice,
+                ReceiverAcceptDate = order.AcceptDate,
+                ReceiverAddress = order.ClientAddress,
+                ReceiverChangeDeliveryDate = order.ClientChangeDeliveryDate,
+                ReceiverName = order.ClientName,
+                ReceiverNotes = order.ClientNotes,
+                ReceiverPhoneNumber = order.ClientPhoneNumber,
+                ReceiverRejectionDate = order.ClientRejectDate,
+                RejectDate = order.RejectDate,
+                ReturnBackToVenderDate = order.SentBackToVenderDate,
+                Status = EnumHelper<OrderStatus>.GetDisplayValue(order.GetOrderStatus()),
+                SuccessfulDeliveryDate = order.DeliveryEndDate,
+                Vender = order.VenderAddress.Vender.Name,
+                VenderNotes = order.OtherNotes
+            });
         }
 
         // GET: Admin/AdminOrders/Create
