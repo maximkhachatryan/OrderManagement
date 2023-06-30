@@ -82,7 +82,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 ReceiverRejectionDate = order.ClientRejectDate,
                 RejectDate = order.RejectDate,
                 ReturnBackToVenderDate = order.SentBackToVenderDate,
-                Status = EnumHelper<OrderStatus>.GetDisplayValue(order.GetOrderStatus()),
+                Status = order.GetOrderStatus(),
                 SuccessfulDeliveryDate = order.DeliveryEndDate,
                 Vender = order.VenderAddress.Vender.Name,
                 VenderNotes = order.OtherNotes
@@ -191,6 +191,70 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetReceiverData(string id)
+        {
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReturnToPreviousState(string id)
+        {
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Reject(string id)
+        {
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Accept(string id)
+        {
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReceiveProduct(string id)
+        {
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SendProduct(string id)
+        {
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConsiderDelivered(string id)
+        {
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConsiderRejectedByReceiver(string id)
+        {
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConsiderReturnedBackToVender(string id)
+        {
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
 
         private bool OrderExists(Guid id)
         {

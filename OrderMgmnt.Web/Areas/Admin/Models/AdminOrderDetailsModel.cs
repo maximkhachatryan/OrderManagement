@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrderMgmnt.Web.Enums;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,7 +13,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Models
         //public int OrderNo { get; set; }
 
         [DisplayName("Կարգավիճակ")]
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
 
         [DisplayName("Հայտը բացվել է")]
         public DateTime OrderCreated { get; set; }

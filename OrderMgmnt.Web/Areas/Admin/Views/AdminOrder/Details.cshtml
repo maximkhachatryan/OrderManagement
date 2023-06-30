@@ -4,11 +4,87 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using OrderMgmnt.Web.Helpers
+@using OrderMgmnt.Web.Enums
 
 <h1>Պատվեր № *</h1>
 
 <div>
-    <h4>Կարգավիճակ - @Model.Status</h4>
+    <div class="row mb-5">
+        <div class=col-sm-4>
+            <h4>
+                Կարգավիճակ -
+                @{
+                    var statusName = EnumHelper<OrderStatus>.GetDisplayValue(Model.Status);
+                }
+                @statusName
+            </h4>
+        </div>
+        <div class="col-sm-8">
+            <form method="post">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    @if (Model.Status == OrderStatus.ClientFilled)
+                    {
+                        <button type="submit" class="btn btn-outline-secondary col"
+                                asp-action="ResetReceiverData" asp-route-id="@Model.OrderId.ToString()">
+                            Զրոյացնել ստացողի տվյալները
+                        </button>
+                    }
+                    else if (Model.Status != OrderStatus.Created)
+                    {
+                        <button type="submit" class="btn btn-outline-secondary col"
+                                asp-action="ReturnToPreviousState" asp-route-id="@Model.OrderId.ToString()">
+                            Վերադարձնել նախորդ կարգավիճակը
+                        </button>
+                    }
+                    @if (Model.Status == OrderStatus.ClientFilled)
+                    {
+                        <button type="button" class="btn btn-outline-primary col"
+                                asp-action="Reject" asp-route-id="@Model.OrderId.ToString()">
+                            Մերժել
+                        </button>
+                        <button type="button" class="btn btn-outline-primary col"
+                                asp-action="Accept" asp-route-id="@Model.OrderId.ToString()">
+                            Հաստատել
+                        </button>
+                    }
+                    @if (Model.Status == OrderMgmnt.Web.Enums.OrderStatus.Accepted)
+                    {
+                        <button type="button" class="btn btn-outline-primary col"
+                                asp-action="ReceiveProduct" asp-route-id="@Model.OrderId.ToString()">
+                            Ընդունել ապրանքը
+                        </button>
+                    }
+                    @if (Model.Status == OrderStatus.PickedUp)
+                    {
+                        <button type="button" class="btn btn-outline-primary col"
+                                asp-action="SendProduct" asp-route-id="@Model.OrderId.ToString()">
+                            Ուղարկել ապրանքը
+                        </button>
+                    }
+                    @if (Model.Status == OrderStatus.DeliveryStarted)
+                    {
+                        <button type="button" class="btn btn-outline-primary col"
+                                asp-action="ConsiderDelivered" asp-route-id="@Model.OrderId.ToString()">
+                            Համարել առաքված
+                        </button>
+                        <button type="button" class="btn btn-outline-primary col"
+                                asp-action="ConsiderRejectedByReceiver" asp-route-id="@Model.OrderId.ToString()">
+                            Համարել մերժված (ստացողի կողմից)
+                        </button>
+                    }
+                    @if (Model.Status == OrderStatus.RejectedByClient)
+                    {
+                        <button type="button" class="btn btn-outline-primary col"
+                                asp-action="ConsiderReturnedBackToVender" asp-route-id="@Model.OrderId.ToString()">
+                            Գործընկերոջը վերադարձված
+                        </button>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
     <hr />
     <dl class="row">
         <dt class="col-sm-4">
