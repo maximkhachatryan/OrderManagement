@@ -73,7 +73,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 DesiredPickupDate = order.DesiredPickUpDate,
                 ProductDescription = order.ProductDescription,
                 ProductPrice = order.ProductPrice,
-                ReceiverAcceptDate = order.AcceptDate,
+                ReceiverAcceptDate = order.ClientFillDate,
                 ReceiverAddress = order.ClientAddress,
                 ReceiverChangeDeliveryDate = order.ClientChangeDeliveryDate,
                 ReceiverName = order.ClientName,
