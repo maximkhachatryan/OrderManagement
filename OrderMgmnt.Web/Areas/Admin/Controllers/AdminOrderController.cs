@@ -74,7 +74,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 ProductDescription = order.ProductDescription,
                 ProductPrice = order.ProductPrice,
                 ReceiverAcceptDate = order.ClientFillDate,
-                ReceiverAddress = order.ClientAddress,
+                ReceiverAddress = order.ClientAddressInfo,
                 ReceiverChangeDeliveryDate = order.ClientChangeDeliveryDate,
                 ReceiverName = order.ClientName,
                 ReceiverNotes = order.ClientNotes,
@@ -100,7 +100,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductDescription,DesiredPickUpDate,IsDeliveryPaymentByClient,ShouldProductPriceBePaid,ProductPrice,OtherNotes,CreateDate,ClientFillDate,AcceptDate,RejectDate,ActualPickUpDate,DeliveryStartDate,DeliveryEndDate,ClientRejectDate,SentBackToVenderDate,ClientName,ClientPhoneNumber,ClientAddress,ClientNotes")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,ProductDescription,DesiredPickUpDate,IsDeliveryPaymentByClient,ShouldProductPriceBePaid,ProductPrice,OtherNotes,CreateDate,ClientFillDate,AcceptDate,RejectDate,ActualPickUpDate,DeliveryStartDate,DeliveryEndDate,ClientRejectDate,SentBackToVenderDate,ClientName,ClientPhoneNumber,ClientAddressInfo,ClientNotes")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -133,7 +133,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ProductDescription,DesiredPickUpDate,IsDeliveryPaymentByClient,ShouldProductPriceBePaid,ProductPrice,OtherNotes,CreateDate,ClientFillDate,AcceptDate,RejectDate,ActualPickUpDate,DeliveryStartDate,DeliveryEndDate,ClientRejectDate,SentBackToVenderDate,ClientName,ClientPhoneNumber,ClientAddress,ClientNotes")] Order order)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ProductDescription,DesiredPickUpDate,IsDeliveryPaymentByClient,ShouldProductPriceBePaid,ProductPrice,OtherNotes,CreateDate,ClientFillDate,AcceptDate,RejectDate,ActualPickUpDate,DeliveryStartDate,DeliveryEndDate,ClientRejectDate,SentBackToVenderDate,ClientName,ClientPhoneNumber,ClientAddressInfo,ClientNotes")] Order order)
         {
             if (id != order.Id)
             {
@@ -214,7 +214,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
             }
 
             order.ClientFillDate = null;
-            order.ClientAddress = null;
+            order.ClientAddressInfo = null;
             order.ClientChangeDeliveryDate = null;
             order.ClientName = null;
             order.ClientNotes = null;

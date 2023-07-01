@@ -56,7 +56,7 @@ namespace OrderMgmnt.Web.Controllers
 
                 existingOrder.ClientFillDate = DateTime.Now;
                 existingOrder.ClientName = model.ReceiverName;
-                existingOrder.ClientAddress = model.ReceiverAddress;
+                existingOrder.ClientAddressInfo = model.ReceiverAddress;
                 existingOrder.ClientPhoneNumber = model.ReceiverPhoneNumber;
                 existingOrder.ClientNotes = model.Notes;
 

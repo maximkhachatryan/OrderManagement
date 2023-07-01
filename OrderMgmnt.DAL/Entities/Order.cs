@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static OrderMgmnt.DAL.Entities.VenderAddress;
 
 namespace OrderMgmnt.DAL.Entities
 {
@@ -61,7 +62,8 @@ namespace OrderMgmnt.DAL.Entities
 
         public string ClientName { get; set; }
         public string ClientPhoneNumber { get; set; }
-        public string ClientAddress { get; set; }
+        public AdministrativeDistrict ClientDistrict { get; set; }
+        public string ClientAddressInfo { get; set; }
         public DateTime? ClientChangeDeliveryDate { get; set; }
         public string ClientNotes { get; set; }
 
