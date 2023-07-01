@@ -16,13 +16,28 @@
         <span class="shadow-input1"></span>
     </div>
 
-    <div class="wrap-input1 validate-input" data-validate="Առաքման հասցե դաշտը պարտադիր է">
-        <input asp-for="ReceiverAddress" class="input1" type="text" placeholder="Առաքման հասցե" />
+    <div class="wrap-input1 validate-input" data-validate="Հեռախոսահամար դաշտը պարտադիր է">
+        <input asp-for="ReceiverPhoneNumber" class="input1" type="text" placeholder="Հեռախոսահամար">
         <span class="shadow-input1"></span>
     </div>
 
-    <div class="wrap-input1 validate-input" data-validate="Հեռախոսահամար դաշտը պարտադիր է">
-        <input asp-for="ReceiverPhoneNumber" class="input1" type="text" placeholder="Հեռախոսահամար">
+    <div class="wrap-input1 validate-input" data-validate="Քաղաք դաշտը պարտադիր է">
+        <input disabled class="input1" type="text" placeholder="ք․ ԵՐԵՎԱՆ" />
+        <span class="shadow-input1"></span>
+    </div>
+
+    <div class="wrap-input1 validate-input" data-validate="Վարչական շրջան դաշտը պարտադիր է">
+        <select asp-for="ReceiverDistrict" class="input1">
+            @foreach (var option in ViewBag.DistrictOptions)
+            {
+                <option value="@option.Value">@option.Text</option>
+            }
+        </select>
+        <span class="shadow-input1"></span>
+    </div>
+
+    <div class="wrap-input1 validate-input" data-validate="Առաքման հասցե դաշտը պարտադիր է">
+        <input asp-for="ReceiverAddressInfo" class="input1" type="text" placeholder="Առաքման հասցե (փողոց, տուն/շենք, բն․)" />
         <span class="shadow-input1"></span>
     </div>
 

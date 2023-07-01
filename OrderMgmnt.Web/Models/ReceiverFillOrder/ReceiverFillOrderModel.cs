@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using static OrderMgmnt.DAL.Entities.VenderAddress;
 
 namespace OrderMgmnt.Web.Models.ReceiverFillOrder
 {
@@ -11,7 +12,8 @@ namespace OrderMgmnt.Web.Models.ReceiverFillOrder
         public Guid OrderId { get; set; }
         public string ProductDescription { get; set; }
         public string ReceiverName { get; set; }
-        public string ReceiverAddress { get; set; }
+        public AdministrativeDistrict ReceiverDistrict { get; set; }
+        public string ReceiverAddressInfo { get; set; }
         public string ReceiverPhoneNumber { get; set; }
         public string Notes { get; set; }
 
@@ -24,9 +26,9 @@ namespace OrderMgmnt.Web.Models.ReceiverFillOrder
                 results.Add(new ValidationResult("Ստացողի Անուն/Ազգանունը լրացված չէ", new[] { nameof(ReceiverName) }));
             }
 
-            if (string.IsNullOrWhiteSpace(ReceiverAddress))
+            if (string.IsNullOrWhiteSpace(ReceiverAddressInfo))
             {
-                results.Add(new ValidationResult("Ստացողի հասցեն լրացված չէ", new[] { nameof(ReceiverAddress) }));
+                results.Add(new ValidationResult("Ստացողի հասցեն լրացված չէ", new[] { nameof(ReceiverAddressInfo) }));
             }
 
             if (string.IsNullOrWhiteSpace(ReceiverPhoneNumber))

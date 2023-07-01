@@ -88,6 +88,11 @@ input {
 	border: none;
 }
 
+select {
+	outline: none;
+	border: none;
+}
+
 textarea {
   outline: none;
   border: none;
@@ -200,6 +205,13 @@ input.input1 {
   border-radius: 25px;
   padding: 0 30px;
 }
+
+select.input1 {
+	height: 50px;
+	border-radius: 25px;
+	padding: 0 30px;
+}
+
 input.input1 + .shadow-input1 {
   border-radius: 25px;
 }

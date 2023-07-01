@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OrderMgmnt.DAL;
 using OrderMgmnt.Web.Enums;
 using OrderMgmnt.Web.Helpers;
 using OrderMgmnt.Web.Models.ReceiverFillOrder;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using static OrderMgmnt.DAL.Entities.VenderAddress;
 
 namespace OrderMgmnt.Web.Controllers
 {
@@ -22,8 +25,8 @@ namespace OrderMgmnt.Web.Controllers
         [Route("[controller]/[action]/{orderId}")]
         public async Task<IActionResult> FillOrder(Guid orderId)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(o=>o.Id == orderId);
-            if(order == null)
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order == null)
             {
                 return NotFound("Order not found");
             }
@@ -34,6 +37,16 @@ namespace OrderMgmnt.Web.Controllers
                     OrderId = order.Id,
                     ProductDescription = order.ProductDescription
                 };
+
+                ViewBag.DistrictOptions = Enum.GetValues(typeof(AdministrativeDistrict))
+                    .Cast<AdministrativeDistrict>()
+                    .Select(district => new SelectListItem
+                    {
+                        Value = ((int)district).ToString(),
+                        Text = EnumHelper<AdministrativeDistrict>.GetDisplayValue(district)
+                    })
+                    .ToList();
+
                 return View(model);
             }
             else
@@ -56,7 +69,8 @@ namespace OrderMgmnt.Web.Controllers
 
                 existingOrder.ClientFillDate = DateTime.Now;
                 existingOrder.ClientName = model.ReceiverName;
-                existingOrder.ClientAddressInfo = model.ReceiverAddress;
+                existingOrder.ClientDistrict = model.ReceiverDistrict;
+                existingOrder.ClientAddressInfo = model.ReceiverAddressInfo;
                 existingOrder.ClientPhoneNumber = model.ReceiverPhoneNumber;
                 existingOrder.ClientNotes = model.Notes;
 
