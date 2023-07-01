@@ -75,7 +75,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Models
         [DisplayName("Առաքումը բարեհաջող ավարտվել է")]
         public DateTime? SuccessfulDeliveryDate { get; set; }
 
-        [DisplayName("Ստացողի մերժել է")]
+        [DisplayName("Ստացողը մերժել է")]
         public DateTime? ReceiverRejectionDate { get; set; }
 
         [DisplayName("Մերժված ապրանքը վերադարձվել է գործընկերոջը")]

@@ -196,6 +196,32 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetReceiverData(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parsed = Guid.TryParse(id, out var idGuid);
+            if (!parsed)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(idGuid);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            order.ClientFillDate = null;
+            order.ClientAddress = null;
+            order.ClientChangeDeliveryDate = null;
+            order.ClientName = null;
+            order.ClientNotes = null;
+            order.ClientPhoneNumber = null;
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -203,6 +229,55 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ReturnToPreviousState(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parsed = Guid.TryParse(id, out var idGuid);
+            if (!parsed)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(idGuid);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            var status = order.GetOrderStatus();
+            switch (status)
+            {
+                case OrderStatus.Created:
+                case OrderStatus.ClientFilled:
+                    //DO NOTHING (no such cases)
+                    break;
+                case OrderStatus.Accepted:
+                    order.AcceptDate = null;
+                    break;
+                case OrderStatus.Rejected:
+                    order.RejectDate = null;
+                    break;
+                case OrderStatus.PickedUp:
+                    order.ActualPickUpDate = null;
+                    break;
+                case OrderStatus.DeliveryStarted:
+                    order.DeliveryStartDate = null;
+                    break;
+                case OrderStatus.Delivered:
+                    order.DeliveryEndDate = null;
+                    break;
+                case OrderStatus.RejectedByClient:
+                    order.ClientRejectDate = null;
+                    break;
+                case OrderStatus.SentBackToVender:
+                    order.SentBackToVenderDate = null;
+                    break;
+            }
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -210,6 +285,26 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Reject(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parsed = Guid.TryParse(id, out var idGuid);
+            if (!parsed)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(idGuid);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.RejectDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -217,6 +312,26 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Accept(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parsed = Guid.TryParse(id, out var idGuid);
+            if (!parsed)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(idGuid);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.AcceptDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -224,6 +339,26 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ReceiveProduct(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parsed = Guid.TryParse(id, out var idGuid);
+            if (!parsed)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(idGuid);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.ActualPickUpDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -231,6 +366,26 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendProduct(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parsed = Guid.TryParse(id, out var idGuid);
+            if (!parsed)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(idGuid);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.DeliveryStartDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -238,6 +393,26 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConsiderDelivered(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parsed = Guid.TryParse(id, out var idGuid);
+            if (!parsed)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(idGuid);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.DeliveryEndDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -245,6 +420,26 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConsiderRejectedByReceiver(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parsed = Guid.TryParse(id, out var idGuid);
+            if (!parsed)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(idGuid);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.ClientRejectDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -252,6 +447,26 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConsiderReturnedBackToVender(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parsed = Guid.TryParse(id, out var idGuid);
+            if (!parsed)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(idGuid);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.SentBackToVenderDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
