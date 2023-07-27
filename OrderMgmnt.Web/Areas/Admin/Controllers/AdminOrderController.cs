@@ -23,18 +23,24 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminOrders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(OrderStatus? status)
         {
             var orders = await _context.Orders
                 .Include(o => o.VenderAddress)
                 .ThenInclude(a => a.Vender)
+                .OrderBy(o => o.CreateDate)
                 .ToListAsync();
-            return View(orders.Select(o => new AdminOrderListItemModel
+
+            var filteredOrders = orders.Where(o => status == null || o.GetOrderStatus() == status);
+            return View(filteredOrders.Select(o => new AdminOrderListItemModel
             {
                 Id = o.Id,
                 CreationDate = o.CreateDate,
                 ProductDescription = o.ProductDescription,
-                Sender = o.VenderAddress.Vender.Name
+                Sender = o.VenderAddress.Vender.Name,
+                SenderDistrict = o.VenderAddress.District,
+                Receiver = o.ClientName,
+                ReceiverDistrict = o.ClientDistrict
             }));
         }
 

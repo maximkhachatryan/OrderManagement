@@ -81,13 +81,13 @@ namespace OrderMgmnt.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapAreaControllerRoute(
-                  name: "Admin",
-                  areaName: "Admin",
-                  pattern: "Admin/{controller=AdminOrder}/{action=Index}/{id?}");
+                    name: "Admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=AdminOrder}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                
+
             });
         }
     }
