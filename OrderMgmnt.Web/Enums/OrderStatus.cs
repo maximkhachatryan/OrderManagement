@@ -8,23 +8,23 @@ namespace OrderMgmnt.Web.Enums
 {
     public enum OrderStatus
     {
-        [Display(Name = "Ստեղծված է")]
+        [Display(Name = "Ստեղծված")]
         Created = 0,
-        [Display(Name = "Լրացված է")]
+        [Display(Name = "Լրացված")]
         ClientFilled = 1,
-        [Display(Name = "Հաստատված է")]
+        [Display(Name = "Հաստատված")]
         Accepted = 2,
-        [Display(Name = "Մերժված է")]
+        [Display(Name = "Մերժված")]
         Rejected = 3,
-        [Display(Name = "Վերցված է")]
+        [Display(Name = "Վերցված")]
         PickedUp = 4,
-        [Display(Name = "Առաքումը սկսված է")]
+        [Display(Name = "Առաքումը սկսված")]
         DeliveryStarted = 5,
-        [Display(Name = "Հաջողությամբ առաքված է")]
+        [Display(Name = "Հաջողությամբ առաքված")]
         Delivered = 6,
-        [Display(Name = "Մերժված է հաճախորդի կողմից")]
+        [Display(Name = "Հաճախորդի կողմից մերժված")]
         RejectedByClient = 7,
-        [Display(Name = "Վերադարձված է գործընկերոջը")]
+        [Display(Name = "Գործընկերոջը վերադարձված")]
         SentBackToVender = 8
     }
 }

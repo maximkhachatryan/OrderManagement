@@ -62,7 +62,7 @@ namespace OrderMgmnt.DAL.Entities
 
         public string ClientName { get; set; }
         public string ClientPhoneNumber { get; set; }
-        public AdministrativeDistrict ClientDistrict { get; set; }
+        public AdministrativeDistrict? ClientDistrict { get; set; }
         public string ClientAddressInfo { get; set; }
         public DateTime? ClientChangeDeliveryDate { get; set; }
         public string ClientNotes { get; set; }

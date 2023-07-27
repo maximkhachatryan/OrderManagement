@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrderMgmnt.Web.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -24,7 +25,10 @@ namespace OrderMgmnt.Web.Areas.Admin.Models
         public string Receiver { get; set; }
 
         [DisplayName("Ստացողի վարչական շրջան")]
-        public AdministrativeDistrict ReceiverDistrict { get; set; }
+        public AdministrativeDistrict? ReceiverDistrict { get; set; }
+
+        [DisplayName("Կարգավիճակ")]
+        public OrderStatus Status { get; set; }
 
         [DisplayName("Ստեղծման ամսաթիվ")]
         public DateTime CreationDate { get; set; }

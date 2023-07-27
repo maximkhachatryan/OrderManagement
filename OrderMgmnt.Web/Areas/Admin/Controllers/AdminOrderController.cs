@@ -32,6 +32,11 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 .ToListAsync();
 
             var filteredOrders = orders.Where(o => status == null || o.GetOrderStatus() == status);
+            if (status.HasValue)
+                ViewBag.Status = EnumHelper<OrderStatus>.GetDisplayValue(status.Value);
+            else
+                ViewBag.Status = "Բոլորը";
+
             return View(filteredOrders.Select(o => new AdminOrderListItemModel
             {
                 Id = o.Id,
@@ -40,7 +45,8 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 Sender = o.VenderAddress.Vender.Name,
                 SenderDistrict = o.VenderAddress.District,
                 Receiver = o.ClientName,
-                ReceiverDistrict = o.ClientDistrict
+                ReceiverDistrict = o.ClientDistrict,
+                Status = o.GetOrderStatus()
             }));
         }
 
@@ -93,29 +99,6 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 Vender = order.VenderAddress.Vender.Name,
                 VenderNotes = order.OtherNotes
             });
-        }
-
-        // GET: Admin/AdminOrders/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Admin/AdminOrders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductDescription,DesiredPickUpDate,IsDeliveryPaymentByClient,ShouldProductPriceBePaid,ProductPrice,OtherNotes,CreateDate,ClientFillDate,AcceptDate,RejectDate,ActualPickUpDate,DeliveryStartDate,DeliveryEndDate,ClientRejectDate,SentBackToVenderDate,ClientName,ClientPhoneNumber,ClientAddressInfo,ClientNotes")] Order order)
-        {
-            if (ModelState.IsValid)
-            {
-                order.Id = Guid.NewGuid();
-                _context.Add(order);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(order);
         }
 
         // GET: Admin/AdminOrders/Edit/5

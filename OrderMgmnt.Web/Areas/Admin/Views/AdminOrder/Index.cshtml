@@ -4,15 +4,32 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using OrderMgmnt.Web.Helpers
+@using OrderMgmnt.Web.Enums
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Պատվերներ։ @ViewBag.Status</h1>
+
+<div class="col-sm-12 mt-3 mb-3">
+    <div class="btn-group" role="group" aria-label="Status Filters">
+        <button type="button" class="btn btn-primary status-filter" data-status="All">Բոլորը</button>
+        <button type="button" class="btn btn-info status-filter" data-status="0">Ստեղծված</button>
+        <button type="button" class="btn btn-info status-filter" data-status="1">Lրացված</button>
+        <button type="button" class="btn btn-info status-filter" data-status="2">Հաստատված</button>
+        <button type="button" class="btn btn-danger status-filter" data-status="3">Մերժված</button>
+        <button type="button" class="btn btn-info status-filter" data-status="4">Վերցված</button>
+        <button type="button" class="btn btn-info status-filter" data-status="5">Առաքումը սկսված</button>
+        <button type="button" class="btn btn-success status-filter" data-status="6">Հաջողությամբ առաքված</button>
+        <button type="button" class="btn btn-info status-filter" data-status="7">Հաճախորդի կողմից մերժված</button>
+        <button type="button" class="btn btn-success status-filter" data-status="8">Գործընկերոջը վերադարձված</button>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate);
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProductDescription)
             </th>
@@ -20,11 +37,18 @@
                 @Html.DisplayNameFor(model => model.Sender)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.SenderDistrict)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Receiver)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
+                @Html.DisplayNameFor(model => model.ReceiverDistrict)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -32,6 +56,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @item.CreationDate.ToString("dd/MM/yyyy HH:mm")
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ProductDescription)
                 </td>
@@ -44,10 +71,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Receiver)
                 </td>
-
                 <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
+                    @Html.DisplayFor(modelItem => item.ReceiverDistrict)
                 </td>
+                <td>
+                    @{
+                        var status = EnumHelper<OrderStatus>.GetDisplayValue(item.Status);
+                    }
+                    @status
+                </td>
+
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id.ToString()">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id.ToString()">Details</a> |
@@ -57,3 +90,24 @@
         }
     </tbody>
 </table>
+
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Attach click event handler to status-filter buttons
+            $('.status-filter').on('click', function () {
+                var status = $(this).data('status');
+                if (status === 'All') {
+                    status = null;
+                }
+
+
+                // Redirect to the controller action with the chosen status as a query parameter
+                window.location.href = '@Url.Action("Index")' + '?status=' + status;
+            });
+        });
+    </script>
+}

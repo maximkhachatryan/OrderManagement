@@ -152,7 +152,7 @@
                 @Html.DisplayNameFor(model => model.ReceiverAcceptDate)
             </dt>
             <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.ReceiverAcceptDate)
+                @Model.ReceiverAcceptDate?.ToString("dd/MM/yyyy HH:mm")
             </dd>
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.ReceiverName)
@@ -179,7 +179,7 @@
                     @Html.DisplayNameFor(model => model.ReceiverChangeDeliveryDate)
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.ReceiverChangeDeliveryDate)
+                    @Model.ReceiverChangeDeliveryDate?.ToString("dd/MM/yyyy HH:mm")
                 </dd>
             }
 
@@ -201,7 +201,7 @@
                     @Html.DisplayNameFor(model => model.AcceptDate)
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.AcceptDate)
+                    @Model.AcceptDate?.ToString("dd/MM/yyyy HH:mm")
                 </dd>
             </dl>
             @if (Model.ActualPickUpDate != null)
@@ -212,7 +212,7 @@
                         @Html.DisplayNameFor(model => model.ActualPickUpDate)
                     </dt>
                     <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.ActualPickUpDate)
+                        @Model.ActualPickUpDate?.ToString("dd/MM/yyyy HH:mm")
                     </dd>
                 </dl>
                 @if (Model.DeliveryStartDate != null)
@@ -223,7 +223,7 @@
                             @Html.DisplayNameFor(model => model.DeliveryStartDate)
                         </dt>
                         <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.DeliveryStartDate)
+                            @Model.DeliveryStartDate?.ToString("dd/MM/yyyy HH:mm")
                         </dd>
                     </dl>
                     @if (Model.SuccessfulDeliveryDate != null)
@@ -234,7 +234,7 @@
                                 @Html.DisplayNameFor(model => model.SuccessfulDeliveryDate)
                             </dt>
                             <dd class="col-sm-8">
-                                @Html.DisplayFor(model => model.SuccessfulDeliveryDate)
+                                @Model.SuccessfulDeliveryDate?.ToString("dd/MM/yyyy HH:mm")
                             </dd>
                         </dl>
                     }
@@ -246,7 +246,7 @@
                                 @Html.DisplayNameFor(model => model.ReceiverRejectionDate)
                             </dt>
                             <dd class="col-sm-8">
-                                @Html.DisplayFor(model => model.ReceiverRejectionDate)
+                                @Model.ReceiverRejectionDate?.ToString("dd/MM/yyyy HH:mm")
                             </dd>
                         </dl>
                         @if (Model.ReturnBackToVenderDate != null)
@@ -257,7 +257,7 @@
                                     @Html.DisplayNameFor(model => model.ReturnBackToVenderDate)
                                 </dt>
                                 <dd class="col-sm-8">
-                                    @Html.DisplayFor(model => model.ReturnBackToVenderDate)
+                                    @Model.ReturnBackToVenderDate?.ToString("dd/MM/yyyy HH:mm")
                                 </dd>
                             </dl>
                         }
@@ -273,7 +273,7 @@
                     @Html.DisplayNameFor(model => model.RejectDate)
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.RejectDate)
+                    @Model.RejectDate?.ToString("dd/MM/yyyy HH:mm")
                 </dd>
             </dl>
         }
