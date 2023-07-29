@@ -24,7 +24,14 @@ namespace OrderMgmnt.Web.Controllers
         public async Task<IActionResult> GetVendorAddresses(Guid vendorId)
         {
             var vendor = await _dbContext.Vendors.AsNoTracking().Include(x => x.Addresses).FirstAsync(v => v.Id == vendorId);
-            var addresses = vendor.Addresses.Where(a => !a.IsRemoved).ToList();
+            var addresses = vendor.Addresses
+                .Where(a => !a.IsRemoved)
+                .Select(a=>new {
+                    a.Id,
+                    a.District,
+                    a.AddressInfo
+                })
+                .ToList();
             return Ok(addresses);
         }
 

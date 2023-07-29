@@ -35,7 +35,15 @@ namespace OrderMgmnt.Web.Controllers
                 var model = new ReceiverFillOrderModel
                 {
                     OrderId = order.Id,
-                    ProductDescription = order.ProductDescription
+                    ProductDescription = order.ProductDescription,
+                    OrderCode = order.OrderCode,
+
+                    //In case operator decided to let receiver to update the fields.
+                    ReceiverName = order.ClientName,
+                    ReceiverPhoneNumber = order.ClientPhoneNumber,
+                    ReceiverDistrict = order.ClientDistrict ?? default,
+                    ReceiverAddressInfo = order.ClientAddressInfo,
+                    ReceiverNotes = order.ClientNotes
                 };
 
                 ViewBag.DistrictOptions = Enum.GetValues(typeof(AdministrativeDistrict))
@@ -72,7 +80,7 @@ namespace OrderMgmnt.Web.Controllers
                 existingOrder.ClientDistrict = model.ReceiverDistrict;
                 existingOrder.ClientAddressInfo = model.ReceiverAddressInfo;
                 existingOrder.ClientPhoneNumber = model.ReceiverPhoneNumber;
-                existingOrder.ClientNotes = model.Notes;
+                existingOrder.ClientNotes = model.ReceiverNotes;
 
                 await _context.SaveChangesAsync();
 

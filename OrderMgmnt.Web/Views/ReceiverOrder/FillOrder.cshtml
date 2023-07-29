@@ -8,16 +8,17 @@
     @Html.AntiForgeryToken()
     <span class="contact1-form-title">
         Դուք պատվիրել եք <span style="font-weight: bold;">@Model.ProductDescription</span>։
-        Խնդրում ենք լրացնել ձեր տվյալները առաքումն իրականացնելու համար
+        <br />
+        Խնդրում ենք լրացնել ձեր տվյալները առաքումն իրականացնելու համար:
     </span>
 
     <div class="wrap-input1 validate-input" data-validate="Անուն/Ազգանուն դաշտը պարտադիր է">
-        <input asp-for="ReceiverName" class="input1" type="text" placeholder="Անուն/Ազգանուն">
+        <input asp-for="ReceiverName" class="input1" type="text" placeholder="Անուն/Ազգանուն" value="@Model.ReceiverName" />
         <span class="shadow-input1"></span>
     </div>
 
     <div class="wrap-input1 validate-input" data-validate="Հեռախոսահամար դաշտը պարտադիր է">
-        <input asp-for="ReceiverPhoneNumber" class="input1" type="text" placeholder="Հեռախոսահամար">
+        <input asp-for="ReceiverPhoneNumber" class="input1" type="text" placeholder="Հեռախոսահամար" value="@Model.ReceiverPhoneNumber" />
         <span class="shadow-input1"></span>
     </div>
 
@@ -30,7 +31,11 @@
         <select asp-for="ReceiverDistrict" class="input1">
             @foreach (var option in ViewBag.DistrictOptions)
             {
-                <option value="@option.Value">@option.Text</option>
+                var selectedFlag = string.Empty;
+                if (int.Parse(option.Value) == (int)Model.ReceiverDistrict)
+                    selectedFlag = "selected";
+
+                <option value="@option.Value" selectedFlag>@option.Text</option>
             }
         </select>
         <span class="shadow-input1"></span>
@@ -42,7 +47,7 @@
     </div>
 
     <div class="wrap-input1 validate-input">
-        <textarea asp-for="Notes" class="input1" placeholder="Այլ նշումներ"></textarea>
+        <textarea asp-for="ReceiverNotes" class="input1" placeholder="Այլ նշումներ">@Model.ReceiverNotes</textarea>
         <span class="shadow-input1"></span>
     </div>
 

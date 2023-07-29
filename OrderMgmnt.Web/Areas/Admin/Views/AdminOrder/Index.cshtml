@@ -28,7 +28,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CreationDate);
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderCode)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProductDescription)
@@ -58,6 +61,10 @@
             <tr>
                 <td>
                     @item.CreationDate.ToString("dd/MM/yyyy HH:mm")
+                </td>
+                <td>
+                    @Html.ActionLink(item.OrderCode.ToString(), "FillOrder", "ReceiverOrder", new { orderId = item.Id.ToString() })
+                    @*@Html.DisplayFor(modelItem => item.OrderCode)*@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ProductDescription)

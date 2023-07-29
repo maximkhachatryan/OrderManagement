@@ -10,12 +10,13 @@ namespace OrderMgmnt.Web.Models.ReceiverFillOrder
     public class ReceiverFillOrderModel : IValidatableObject
     {
         public Guid OrderId { get; set; }
+        public int OrderCode { get; set; }
         public string ProductDescription { get; set; }
         public string ReceiverName { get; set; }
         public AdministrativeDistrict ReceiverDistrict { get; set; }
         public string ReceiverAddressInfo { get; set; }
         public string ReceiverPhoneNumber { get; set; }
-        public string Notes { get; set; }
+        public string ReceiverNotes { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

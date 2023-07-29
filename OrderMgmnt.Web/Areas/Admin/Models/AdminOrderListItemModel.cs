@@ -12,6 +12,9 @@ namespace OrderMgmnt.Web.Areas.Admin.Models
     {
         public Guid Id { get; set; }
 
+        [DisplayName("Պատվերի կոդ")]
+        public int OrderCode { get; set; }
+
         [DisplayName("Ապրանքի նկարագիր")]
         public string ProductDescription { get; set; }
 

@@ -40,6 +40,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
             return View(filteredOrders.Select(o => new AdminOrderListItemModel
             {
                 Id = o.Id,
+                OrderCode = o.OrderCode,
                 CreationDate = o.CreateDate,
                 ProductDescription = o.ProductDescription,
                 Sender = o.VendorAddress.Vendor.Name,
@@ -183,7 +184,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetReceiverData(string id)
+        public async Task<IActionResult> SuggestToUpdateData(string id)
         {
             if (id == null)
             {
@@ -203,11 +204,11 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
             }
 
             order.ClientFillDate = null;
-            order.ClientAddressInfo = null;
-            order.ClientChangeDeliveryDate = null;
-            order.ClientName = null;
-            order.ClientNotes = null;
-            order.ClientPhoneNumber = null;
+            //order.ClientAddressInfo = null;
+            //order.ClientChangeDeliveryDate = null;
+            //order.ClientName = null;
+            //order.ClientNotes = null;
+            //order.ClientPhoneNumber = null;
 
             await _context.SaveChangesAsync();
 
