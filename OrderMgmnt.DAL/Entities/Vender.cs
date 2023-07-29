@@ -9,6 +9,7 @@ namespace OrderMgmnt.DAL.Entities
     public class Vender
     {
         public Guid Id { get; set; }
+        public string Code { get; set; }
         public string BrandName { get; set; }
         public string Name { get; set; }
         public string PhoneNumber1 { get; set; }
