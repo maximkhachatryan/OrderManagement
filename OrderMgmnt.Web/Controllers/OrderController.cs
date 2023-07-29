@@ -84,11 +84,20 @@ namespace OrderMgmnt.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> PlaceOrder([FromBody] PlaceOrderRequestDTO request)
         {
-            var venderAddress = await _context.VenderAddresses.FindAsync(request.VenderAddressId);
+            var venderAddress = await _context.VenderAddresses
+                .FirstOrDefaultAsync(a => a.Id == request.VenderAddressId);
+
             if (venderAddress == null)
             {
                 return BadRequest("VenderAddress not found!");
             }
+
+            //var lastCode = _context.Orders
+            //    .Where(o => o.VenderAddress == venderAddress)
+            //    .Select(o => o.OrderCode)
+            //    .OrderByDescending(o => o)
+            //    .Take(1)
+            //    .FirstOrDefault();
 
             var order = new Order
             {

@@ -10,8 +10,8 @@ using OrderMgmnt.DAL;
 namespace OrderMgmnt.DAL.Migrations
 {
     [DbContext(typeof(OrderMgmntContext))]
-    [Migration("20230701110516_AddClientDistrict")]
-    partial class AddClientDistrict
+    [Migration("20230729162259_InitialPush")]
+    partial class InitialPush
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,7 +39,7 @@ namespace OrderMgmnt.DAL.Migrations
                     b.Property<DateTime?>("ClientChangeDeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ClientDistrict")
+                    b.Property<int?>("ClientDistrict")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ClientFillDate")
@@ -72,6 +72,11 @@ namespace OrderMgmnt.DAL.Migrations
                     b.Property<bool>("IsDeliveryPaymentByClient")
                         .HasColumnType("bit");
 
+                    b.Property<int>("OrderCode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<string>("OtherNotes")
                         .HasColumnType("nvarchar(max)");
 
@@ -96,6 +101,10 @@ namespace OrderMgmnt.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderCode")
+                        .IsUnique()
+                        .IsClustered(false);
 
                     b.HasIndex("VenderAddressId");
 
@@ -138,6 +147,14 @@ namespace OrderMgmnt.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(6)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(6)")
+                        .HasDefaultValue("");
+
                     b.Property<string>("InstagramLink")
                         .HasColumnType("nvarchar(max)");
 
@@ -159,6 +176,9 @@ namespace OrderMgmnt.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.ToTable("Venders");
                 });

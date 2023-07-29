@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using OrderMgmnt.DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,12 @@ namespace OrderMgmnt.DAL
                 entity.Property(b => b.ProductPrice).HasPrecision(10, 2);
                 entity.HasOne(d => d.VenderAddress)
                   .WithMany(p => p.Orders).IsRequired();
+
+                entity.Property(e => e.OrderCode)
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                    .IsRequired();
+                entity.HasIndex(e => e.OrderCode).IsUnique().IsClustered(false);
+
             });
 
             modelBuilder.Entity<Vender>(entity =>
@@ -41,7 +48,10 @@ namespace OrderMgmnt.DAL
                 entity.Property(e => e.VenderWalletAmount).HasPrecision(12, 2);
                 entity.HasMany(e => e.Addresses).WithOne(a => a.Vender).IsRequired();
 
-                entity.Property(e => e.Code).IsUnicode(false)
+                entity.Property(e => e.Code)
+                    .IsUnicode(false)
+                    .IsRequired()
+                    .HasDefaultValue("")
                     .HasMaxLength(6);
                 entity.HasIndex(e => e.Code).IsUnique();
             });

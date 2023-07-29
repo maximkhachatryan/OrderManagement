@@ -10,6 +10,7 @@ namespace OrderMgmnt.DAL.Entities
     public class Order
     {
         public Guid Id { get; set; }
+        public int OrderCode { get; set; }
         public string ProductDescription { get; set; }
         public DateTime DesiredPickUpDate { get; set; }
         public bool IsDeliveryPaymentByClient { get; set; }

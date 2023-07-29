@@ -70,6 +70,11 @@ namespace OrderMgmnt.DAL.Migrations
                     b.Property<bool>("IsDeliveryPaymentByClient")
                         .HasColumnType("bit");
 
+                    b.Property<int>("OrderCode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<string>("OtherNotes")
                         .HasColumnType("nvarchar(max)");
 
@@ -94,6 +99,10 @@ namespace OrderMgmnt.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderCode")
+                        .IsUnique()
+                        .IsClustered(false);
 
                     b.HasIndex("VenderAddressId");
 
@@ -137,9 +146,12 @@ namespace OrderMgmnt.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Code")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(6)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(6)");
+                        .HasColumnType("varchar(6)")
+                        .HasDefaultValue("");
 
                     b.Property<string>("InstagramLink")
                         .HasColumnType("nvarchar(max)");
@@ -164,8 +176,7 @@ namespace OrderMgmnt.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
-                        .IsUnique()
-                        .HasFilter("[Code] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Venders");
                 });
