@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrderMgmnt.Web.Areas.Admin.Controllers
 {
-    public class AdminVenderController : Controller
+    public class AdminVendorController : Controller
     {
         public IActionResult Index()
         {

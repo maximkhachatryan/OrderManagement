@@ -8,7 +8,7 @@ namespace OrderMgmnt.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Venders",
+                name: "Vendors",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -19,11 +19,11 @@ namespace OrderMgmnt.DAL.Migrations
                     PhoneNumber2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InstagramLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WebsiteLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VenderWalletAmount = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: false)
+                    VendorWalletAmount = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Venders", x => x.Id);
+                    table.PrimaryKey("PK_Vendors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -33,36 +33,36 @@ namespace OrderMgmnt.DAL.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    VendorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Venders_VenderId",
-                        column: x => x.VenderId,
-                        principalTable: "Venders",
+                        name: "FK_Users_Vendors_VendorId",
+                        column: x => x.VendorId,
+                        principalTable: "Vendors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "VenderAddresses",
+                name: "VendorAddresses",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     District = table.Column<int>(type: "int", nullable: false),
                     AddressInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    VenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    VendorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VenderAddresses", x => x.Id);
+                    table.PrimaryKey("PK_VendorAddresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VenderAddresses_Venders_VenderId",
-                        column: x => x.VenderId,
-                        principalTable: "Venders",
+                        name: "FK_VendorAddresses_Vendors_VendorId",
+                        column: x => x.VendorId,
+                        principalTable: "Vendors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -88,22 +88,22 @@ namespace OrderMgmnt.DAL.Migrations
                     DeliveryStartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeliveryEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ClientRejectDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    SentBackToVenderDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SentBackToVendorDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ClientName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientDistrict = table.Column<int>(type: "int", nullable: true),
                     ClientAddressInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientChangeDeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ClientNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VenderAddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    VendorAddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_VenderAddresses_VenderAddressId",
-                        column: x => x.VenderAddressId,
-                        principalTable: "VenderAddresses",
+                        name: "FK_Orders_VendorAddresses_VendorAddressId",
+                        column: x => x.VendorAddressId,
+                        principalTable: "VendorAddresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -116,9 +116,9 @@ namespace OrderMgmnt.DAL.Migrations
                 .Annotation("SqlServer:Clustered", false);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_VenderAddressId",
+                name: "IX_Orders_VendorAddressId",
                 table: "Orders",
-                column: "VenderAddressId");
+                column: "VendorAddressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_UserName",
@@ -126,18 +126,18 @@ namespace OrderMgmnt.DAL.Migrations
                 column: "UserName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_VenderId",
+                name: "IX_Users_VendorId",
                 table: "Users",
-                column: "VenderId");
+                column: "VendorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VenderAddresses_VenderId",
-                table: "VenderAddresses",
-                column: "VenderId");
+                name: "IX_VendorAddresses_VendorId",
+                table: "VendorAddresses",
+                column: "VendorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Venders_Code",
-                table: "Venders",
+                name: "IX_Vendors_Code",
+                table: "Vendors",
                 column: "Code",
                 unique: true);
         }
@@ -151,10 +151,10 @@ namespace OrderMgmnt.DAL.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "VenderAddresses");
+                name: "VendorAddresses");
 
             migrationBuilder.DropTable(
-                name: "Venders");
+                name: "Vendors");
         }
     }
 }

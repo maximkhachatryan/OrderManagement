@@ -19,7 +19,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Models
         public DateTime OrderCreated { get; set; }
 
         [DisplayName("Գործընկեր")]
-        public string Vender { get; set; }
+        public string Vendor { get; set; }
 
         [DisplayName("Ապրանքի նկարագիր")]
         public string ProductDescription { get; set; }
@@ -38,7 +38,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Models
         public decimal DeliveryPrice { get; set; }
 
         [DisplayName("Նշումներ")]
-        public string VenderNotes { get; set; }
+        public string VendorNotes { get; set; }
 
 
         [DisplayName("Ստացողի հաստատել է")]
@@ -79,6 +79,6 @@ namespace OrderMgmnt.Web.Areas.Admin.Models
         public DateTime? ReceiverRejectionDate { get; set; }
 
         [DisplayName("Մերժված ապրանքը վերադարձվել է գործընկերոջը")]
-        public DateTime? ReturnBackToVenderDate { get; set; }
+        public DateTime? ReturnBackToVendorDate { get; set; }
     }
 }

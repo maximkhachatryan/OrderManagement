@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OrderMgmnt.DAL.Entities
 {
-    public class VenderAddress
+    public class VendorAddress
     {
         public Guid Id { get; set; }
         public AdministrativeDistrict District { get; set; }
@@ -15,7 +15,7 @@ namespace OrderMgmnt.DAL.Entities
         public bool IsRemoved { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual Vender Vender { get; set; }
+        public virtual Vendor Vendor { get; set; }
 
         public enum AdministrativeDistrict
         {

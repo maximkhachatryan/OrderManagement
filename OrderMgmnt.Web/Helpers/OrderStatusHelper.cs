@@ -11,8 +11,8 @@ namespace OrderMgmnt.Web.Helpers
     {
         public static OrderStatus GetOrderStatus(this Order order)
         {
-            if (order.SentBackToVenderDate != null)
-                return OrderStatus.SentBackToVender;
+            if (order.SentBackToVendorDate != null)
+                return OrderStatus.SentBackToVendor;
 
             if (order.ClientRejectDate != null)
                 return OrderStatus.RejectedByClient;

@@ -25,6 +25,6 @@ namespace OrderMgmnt.Web.Enums
         [Display(Name = "Հաճախորդի կողմից մերժված")]
         RejectedByClient = 7,
         [Display(Name = "Գործընկերոջը վերադարձված")]
-        SentBackToVender = 8
+        SentBackToVendor = 8
     }
 }

@@ -12,6 +12,6 @@ namespace OrderMgmnt.DAL.Entities
         public string UserName { get; set; }
         public string PasswordHash { get; set; }
 
-        public Vender Vender { get; set; }
+        public Vendor Vendor { get; set; }
     }
 }

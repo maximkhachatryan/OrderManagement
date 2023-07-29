@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrderMgmnt.DAL.Entities
 {
-    public class Vender
+    public class Vendor
     {
         public Guid Id { get; set; }
         public string Code { get; set; }
@@ -17,10 +17,10 @@ namespace OrderMgmnt.DAL.Entities
         public string InstagramLink { get; set; }
         public string WebsiteLink { get; set; }
 
-        public decimal VenderWalletAmount { get; set; }
+        public decimal VendorWalletAmount { get; set; }
 
         
-        public virtual ICollection<VenderAddress> Addresses { get; set; }
+        public virtual ICollection<VendorAddress> Addresses { get; set; }
 
     }
 }

@@ -8,7 +8,7 @@ namespace OrderMgmnt.Web.Models.Order
     public class PlaceOrderRequestDTO
     {
         public string ProductDescription { get; set; }
-        public Guid VenderAddressId { get; set; }
+        public Guid VendorAddressId { get; set; }
         public DateTime PickUpDate { get; set; }
         public bool IsDeliveryPaymentByClient { get; set; }
         public bool ShouldProductPriceBePaid { get; set; }

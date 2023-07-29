@@ -44,14 +44,14 @@ namespace OrderMgmnt.Web.Controllers
         //}
 
         [HttpGet]
-        [Route("{venderId}")]
-        public async Task<IActionResult> GetAllOrders(Guid venderId)
+        [Route("{vendorId}")]
+        public async Task<IActionResult> GetAllOrders(Guid vendorId)
         {
-            var venderExists = await _context.Venders.AnyAsync(v => v.Id == venderId);
-            if (!venderExists)
-                return BadRequest("Vender not found!");
+            var vendorExists = await _context.Vendors.AnyAsync(v => v.Id == vendorId);
+            if (!vendorExists)
+                return BadRequest("Vendor not found!");
 
-            var orders = _context.Venders
+            var orders = _context.Vendors
                 .Include(x => x.Addresses)
                 .ThenInclude(x => x.Orders)
                 .SelectMany(v => v.Addresses)
@@ -68,11 +68,11 @@ namespace OrderMgmnt.Web.Controllers
                     o.DesiredPickUpDate,
                     o.ProductPrice,
                     o.ShouldProductPriceBePaid,
-                    VenderAddress = new
+                    VendorAddress = new
                     {
-                        Id = o.VenderAddress.Id,
-                        o.VenderAddress.District,
-                        o.VenderAddress.AddressInfo
+                        Id = o.VendorAddress.Id,
+                        o.VendorAddress.District,
+                        o.VendorAddress.AddressInfo
                     },
                     Status = o.GetOrderStatus()
                 })
@@ -84,16 +84,16 @@ namespace OrderMgmnt.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> PlaceOrder([FromBody] PlaceOrderRequestDTO request)
         {
-            var venderAddress = await _context.VenderAddresses
-                .FirstOrDefaultAsync(a => a.Id == request.VenderAddressId);
+            var vendorAddress = await _context.VendorAddresses
+                .FirstOrDefaultAsync(a => a.Id == request.VendorAddressId);
 
-            if (venderAddress == null)
+            if (vendorAddress == null)
             {
-                return BadRequest("VenderAddress not found!");
+                return BadRequest("VendorAddress not found!");
             }
 
             //var lastCode = _context.Orders
-            //    .Where(o => o.VenderAddress == venderAddress)
+            //    .Where(o => o.VendorAddress == vendorAddress)
             //    .Select(o => o.OrderCode)
             //    .OrderByDescending(o => o)
             //    .Take(1)
@@ -103,7 +103,7 @@ namespace OrderMgmnt.Web.Controllers
             {
                 Id = Guid.NewGuid(),
                 ProductDescription = request.ProductDescription,
-                VenderAddress = venderAddress,
+                VendorAddress = vendorAddress,
                 DesiredPickUpDate = request.PickUpDate,
                 IsDeliveryPaymentByClient = request.IsDeliveryPaymentByClient,
                 ShouldProductPriceBePaid = request.ShouldProductPriceBePaid,
@@ -118,11 +118,11 @@ namespace OrderMgmnt.Web.Controllers
             return Ok();
         }
 
-        //[HttpPost("/{venderId}/{orderId}")]
-        //public async Task<IActionResult> PlaceOrder(Guid venderId, Guid orderId, OrderModel orderDetails)
+        //[HttpPost("/{vendorId}/{orderId}")]
+        //public async Task<IActionResult> PlaceOrder(Guid vendorId, Guid orderId, OrderModel orderDetails)
         //{
         //    var order = await _context.Orders.FindAsync(orderId);
-        //    if (order == null  || order.VenderId != venderId)
+        //    if (order == null  || order.VendorId != vendorId)
         //    {
         //        return BadRequest("Order not found!");
         //    }

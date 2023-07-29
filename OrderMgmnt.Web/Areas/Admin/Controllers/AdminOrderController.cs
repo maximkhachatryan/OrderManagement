@@ -8,7 +8,7 @@ using OrderMgmnt.Web.Helpers;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static OrderMgmnt.DAL.Entities.VenderAddress;
+using static OrderMgmnt.DAL.Entities.VendorAddress;
 
 namespace OrderMgmnt.Web.Areas.Admin.Controllers
 {
@@ -26,8 +26,8 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index(OrderStatus? status)
         {
             var orders = await _context.Orders
-                .Include(o => o.VenderAddress)
-                .ThenInclude(a => a.Vender)
+                .Include(o => o.VendorAddress)
+                .ThenInclude(a => a.Vendor)
                 .OrderBy(o => o.CreateDate)
                 .ToListAsync();
 
@@ -42,8 +42,8 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 Id = o.Id,
                 CreationDate = o.CreateDate,
                 ProductDescription = o.ProductDescription,
-                Sender = o.VenderAddress.Vender.Name,
-                SenderDistrict = o.VenderAddress.District,
+                Sender = o.VendorAddress.Vendor.Name,
+                SenderDistrict = o.VendorAddress.District,
                 Receiver = o.ClientName,
                 ReceiverDistrict = o.ClientDistrict,
                 Status = o.GetOrderStatus()
@@ -65,8 +65,8 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
             }
 
             var order = await _context.Orders
-                .Include(o => o.VenderAddress)
-                .ThenInclude(a => a.Vender)
+                .Include(o => o.VendorAddress)
+                .ThenInclude(a => a.Vendor)
                 .FirstOrDefaultAsync(m => m.Id == idGuid);
             if (order == null)
             {
@@ -81,7 +81,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 DeliveryStartDate = order.DeliveryStartDate,
                 OrderCreated = order.CreateDate,
                 OrderId = order.Id,
-                PickupAddress = $"ք․ Երևան, {EnumHelper<AdministrativeDistrict>.GetDisplayValue(order.VenderAddress.District)}, {order.VenderAddress.AddressInfo}",
+                PickupAddress = $"ք․ Երևան, {EnumHelper<AdministrativeDistrict>.GetDisplayValue(order.VendorAddress.District)}, {order.VendorAddress.AddressInfo}",
                 DesiredPickupDate = order.DesiredPickUpDate,
                 ProductDescription = order.ProductDescription,
                 ProductPrice = order.ProductPrice,
@@ -93,11 +93,11 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 ReceiverPhoneNumber = order.ClientPhoneNumber,
                 ReceiverRejectionDate = order.ClientRejectDate,
                 RejectDate = order.RejectDate,
-                ReturnBackToVenderDate = order.SentBackToVenderDate,
+                ReturnBackToVendorDate = order.SentBackToVendorDate,
                 Status = order.GetOrderStatus(),
                 SuccessfulDeliveryDate = order.DeliveryEndDate,
-                Vender = order.VenderAddress.Vender.Name,
-                VenderNotes = order.OtherNotes
+                Vendor = order.VendorAddress.Vendor.Name,
+                VendorNotes = order.OtherNotes
             });
         }
 
@@ -122,7 +122,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ProductDescription,DesiredPickUpDate,IsDeliveryPaymentByClient,ShouldProductPriceBePaid,ProductPrice,OtherNotes,CreateDate,ClientFillDate,AcceptDate,RejectDate,ActualPickUpDate,DeliveryStartDate,DeliveryEndDate,ClientRejectDate,SentBackToVenderDate,ClientName,ClientPhoneNumber,ClientAddressInfo,ClientNotes")] Order order)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ProductDescription,DesiredPickUpDate,IsDeliveryPaymentByClient,ShouldProductPriceBePaid,ProductPrice,OtherNotes,CreateDate,ClientFillDate,AcceptDate,RejectDate,ActualPickUpDate,DeliveryStartDate,DeliveryEndDate,ClientRejectDate,SentBackToVendorDate,ClientName,ClientPhoneNumber,ClientAddressInfo,ClientNotes")] Order order)
         {
             if (id != order.Id)
             {
@@ -260,8 +260,8 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
                 case OrderStatus.RejectedByClient:
                     order.ClientRejectDate = null;
                     break;
-                case OrderStatus.SentBackToVender:
-                    order.SentBackToVenderDate = null;
+                case OrderStatus.SentBackToVendor:
+                    order.SentBackToVendorDate = null;
                     break;
             }
 
@@ -434,7 +434,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ConsiderReturnedBackToVender(string id)
+        public async Task<IActionResult> ConsiderReturnedBackToVendor(string id)
         {
             if (id == null)
             {
@@ -452,7 +452,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            order.SentBackToVenderDate = DateTime.Now;
+            order.SentBackToVendorDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
 

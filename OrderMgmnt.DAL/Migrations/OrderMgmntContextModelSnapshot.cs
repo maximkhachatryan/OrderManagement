@@ -89,13 +89,13 @@ namespace OrderMgmnt.DAL.Migrations
                     b.Property<DateTime?>("RejectDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("SentBackToVenderDate")
+                    b.Property<DateTime?>("SentBackToVendorDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("ShouldProductPriceBePaid")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("VenderAddressId")
+                    b.Property<Guid>("VendorAddressId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -104,7 +104,7 @@ namespace OrderMgmnt.DAL.Migrations
                         .IsUnique()
                         .IsClustered(false);
 
-                    b.HasIndex("VenderAddressId");
+                    b.HasIndex("VendorAddressId");
 
                     b.ToTable("Orders");
                 });
@@ -123,19 +123,19 @@ namespace OrderMgmnt.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("VenderId")
+                    b.Property<Guid>("VendorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserName");
 
-                    b.HasIndex("VenderId");
+                    b.HasIndex("VendorId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("OrderMgmnt.DAL.Entities.Vender", b =>
+            modelBuilder.Entity("OrderMgmnt.DAL.Entities.Vendor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -166,7 +166,7 @@ namespace OrderMgmnt.DAL.Migrations
                     b.Property<string>("PhoneNumber2")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("VenderWalletAmount")
+                    b.Property<decimal>("VendorWalletAmount")
                         .HasPrecision(12, 2)
                         .HasColumnType("decimal(12,2)");
 
@@ -178,10 +178,10 @@ namespace OrderMgmnt.DAL.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("Venders");
+                    b.ToTable("Vendors");
                 });
 
-            modelBuilder.Entity("OrderMgmnt.DAL.Entities.VenderAddress", b =>
+            modelBuilder.Entity("OrderMgmnt.DAL.Entities.VendorAddress", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -197,55 +197,55 @@ namespace OrderMgmnt.DAL.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("VenderId")
+                    b.Property<Guid>("VendorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VenderId");
+                    b.HasIndex("VendorId");
 
-                    b.ToTable("VenderAddresses");
+                    b.ToTable("VendorAddresses");
                 });
 
             modelBuilder.Entity("OrderMgmnt.DAL.Entities.Order", b =>
                 {
-                    b.HasOne("OrderMgmnt.DAL.Entities.VenderAddress", "VenderAddress")
+                    b.HasOne("OrderMgmnt.DAL.Entities.VendorAddress", "VendorAddress")
                         .WithMany("Orders")
-                        .HasForeignKey("VenderAddressId")
+                        .HasForeignKey("VendorAddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("VenderAddress");
+                    b.Navigation("VendorAddress");
                 });
 
             modelBuilder.Entity("OrderMgmnt.DAL.Entities.User", b =>
                 {
-                    b.HasOne("OrderMgmnt.DAL.Entities.Vender", "Vender")
+                    b.HasOne("OrderMgmnt.DAL.Entities.Vendor", "Vendor")
                         .WithMany()
-                        .HasForeignKey("VenderId")
+                        .HasForeignKey("VendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Vender");
+                    b.Navigation("Vendor");
                 });
 
-            modelBuilder.Entity("OrderMgmnt.DAL.Entities.VenderAddress", b =>
+            modelBuilder.Entity("OrderMgmnt.DAL.Entities.VendorAddress", b =>
                 {
-                    b.HasOne("OrderMgmnt.DAL.Entities.Vender", "Vender")
+                    b.HasOne("OrderMgmnt.DAL.Entities.Vendor", "Vendor")
                         .WithMany("Addresses")
-                        .HasForeignKey("VenderId")
+                        .HasForeignKey("VendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Vender");
+                    b.Navigation("Vendor");
                 });
 
-            modelBuilder.Entity("OrderMgmnt.DAL.Entities.Vender", b =>
+            modelBuilder.Entity("OrderMgmnt.DAL.Entities.Vendor", b =>
                 {
                     b.Navigation("Addresses");
                 });
 
-            modelBuilder.Entity("OrderMgmnt.DAL.Entities.VenderAddress", b =>
+            modelBuilder.Entity("OrderMgmnt.DAL.Entities.VendorAddress", b =>
                 {
                     b.Navigation("Orders");
                 });

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static OrderMgmnt.DAL.Entities.VenderAddress;
+using static OrderMgmnt.DAL.Entities.VendorAddress;
 
 namespace OrderMgmnt.DAL.Entities
 {
@@ -56,9 +56,9 @@ namespace OrderMgmnt.DAL.Entities
         public DateTime? ClientRejectDate { get; set; }
 
         /// <summary>
-        /// This field will be set when the client rejected product is returned back to the vender
+        /// This field will be set when the client rejected product is returned back to the vendor
         /// </summary>
-        public DateTime? SentBackToVenderDate { get; set; }
+        public DateTime? SentBackToVendorDate { get; set; }
 
 
         public string ClientName { get; set; }
@@ -69,6 +69,6 @@ namespace OrderMgmnt.DAL.Entities
         public string ClientNotes { get; set; }
 
 
-        public VenderAddress VenderAddress { get; set; }
+        public VendorAddress VendorAddress { get; set; }
     }
 }

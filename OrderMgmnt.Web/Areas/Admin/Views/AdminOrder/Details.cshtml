@@ -76,7 +76,7 @@
                     @if (Model.Status == OrderStatus.RejectedByClient)
                     {
                         <button type="submit" class="btn btn-outline-primary col"
-                                asp-action="ConsiderReturnedBackToVender" asp-route-id="@Model.OrderId.ToString()">
+                                asp-action="ConsiderReturnedBackToVendor" asp-route-id="@Model.OrderId.ToString()">
                             Գործընկերոջը վերադարձված
                         </button>
                     }
@@ -94,10 +94,10 @@
             @Html.DisplayFor(model => model.OrderCreated)
         </dd>
         <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.Vender)
+            @Html.DisplayNameFor(model => model.Vendor)
         </dt>
         <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.Vender)
+            @Html.DisplayFor(model => model.Vendor)
         </dd>
         <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.ProductDescription)
@@ -137,10 +137,10 @@
         @if (Model.ReceiverNotes != null)
         {
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.VenderNotes)
+                @Html.DisplayNameFor(model => model.VendorNotes)
             </dt>
             <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.VenderNotes)
+                @Html.DisplayFor(model => model.VendorNotes)
             </dd>
         }
     </dl>
@@ -249,15 +249,15 @@
                                 @Model.ReceiverRejectionDate?.ToString("dd/MM/yyyy HH:mm")
                             </dd>
                         </dl>
-                        @if (Model.ReturnBackToVenderDate != null)
+                        @if (Model.ReturnBackToVendorDate != null)
                         {
                             <hr />
                             <dl class="row">
                                 <dt class="col-sm-4">
-                                    @Html.DisplayNameFor(model => model.ReturnBackToVenderDate)
+                                    @Html.DisplayNameFor(model => model.ReturnBackToVendorDate)
                                 </dt>
                                 <dd class="col-sm-8">
-                                    @Model.ReturnBackToVenderDate?.ToString("dd/MM/yyyy HH:mm")
+                                    @Model.ReturnBackToVendorDate?.ToString("dd/MM/yyyy HH:mm")
                                 </dd>
                             </dl>
                         }

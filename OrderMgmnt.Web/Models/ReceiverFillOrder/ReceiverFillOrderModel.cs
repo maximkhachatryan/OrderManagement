@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using static OrderMgmnt.DAL.Entities.VenderAddress;
+using static OrderMgmnt.DAL.Entities.VendorAddress;
 
 namespace OrderMgmnt.Web.Models.ReceiverFillOrder
 {

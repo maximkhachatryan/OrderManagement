@@ -16,9 +16,9 @@ namespace OrderMgmnt.DAL
         }
 
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<Vender> Venders { get; set; }
+        public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<VenderAddress> VenderAddresses { get; set; }
+        public virtual DbSet<VendorAddress> VendorAddresses { get; set; }
 
 
 
@@ -30,7 +30,7 @@ namespace OrderMgmnt.DAL
             {
                 entity.Property(e => e.ProductDescription).IsRequired();
                 entity.Property(b => b.ProductPrice).HasPrecision(10, 2);
-                entity.HasOne(d => d.VenderAddress)
+                entity.HasOne(d => d.VendorAddress)
                   .WithMany(p => p.Orders).IsRequired();
 
                 entity.Property(e => e.OrderCode)
@@ -40,13 +40,13 @@ namespace OrderMgmnt.DAL
 
             });
 
-            modelBuilder.Entity<Vender>(entity =>
+            modelBuilder.Entity<Vendor>(entity =>
             {
                 entity.Property(e => e.PhoneNumber1).IsRequired();
                 entity.Property(e => e.BrandName).IsRequired();
 
-                entity.Property(e => e.VenderWalletAmount).HasPrecision(12, 2);
-                entity.HasMany(e => e.Addresses).WithOne(a => a.Vender).IsRequired();
+                entity.Property(e => e.VendorWalletAmount).HasPrecision(12, 2);
+                entity.HasMany(e => e.Addresses).WithOne(a => a.Vendor).IsRequired();
 
                 entity.Property(e => e.Code)
                     .IsUnicode(false)
@@ -61,10 +61,10 @@ namespace OrderMgmnt.DAL
                 entity.Property(e => e.UserName).IsRequired();
                 entity.Property(e => e.PasswordHash).IsRequired();
                 entity.HasIndex(e => e.UserName);
-                entity.HasOne(e => e.Vender).WithMany().IsRequired();
+                entity.HasOne(e => e.Vendor).WithMany().IsRequired();
             });
 
-            modelBuilder.Entity<VenderAddress>(entity =>
+            modelBuilder.Entity<VendorAddress>(entity =>
             {
                 entity.Property(e => e.AddressInfo).IsRequired();
             });
