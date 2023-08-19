@@ -3,7 +3,9 @@
     Layout = "~/Views/Shared/_Layout_ReceiverOrder.cshtml";
 }
 
-
+<div class="contact1-pic js-tilt" data-tilt>
+    <img src="/image/@(ViewBag.VendorId).png" class="mx-auto" alt="IMG">
+</div>
 <form asp-action="FillOrder" class="contact1-form validate-form">
     @Html.AntiForgeryToken()
     <span class="contact1-form-title">

@@ -25,11 +25,18 @@ namespace OrderMgmnt.Web.Controllers
         [Route("[controller]/[action]/{orderId}")]
         public async Task<IActionResult> FillOrder(Guid orderId)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            var order = await _context.Orders
+                .AsNoTracking()
+                .Include(o=>o.VendorAddress)
+                .ThenInclude(a=>a.Vendor)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
             if (order == null)
             {
                 return NotFound("Order not found");
             }
+
+            ViewBag.VendorId = order.VendorAddress.Vendor.Id;
+
             if (order.GetOrderStatus() == OrderStatus.Created)
             {
                 var model = new ReceiverFillOrderModel
@@ -43,7 +50,9 @@ namespace OrderMgmnt.Web.Controllers
                     ReceiverPhoneNumber = order.ClientPhoneNumber,
                     ReceiverDistrict = order.ClientDistrict ?? default,
                     ReceiverAddressInfo = order.ClientAddressInfo,
-                    ReceiverNotes = order.ClientNotes
+                    ReceiverNotes = order.ClientNotes,
+
+                    
                 };
 
                 ViewBag.DistrictOptions = Enum.GetValues(typeof(AdministrativeDistrict))
@@ -59,7 +68,7 @@ namespace OrderMgmnt.Web.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(OrderFilled));
+                return View("OrderFilled");
             }
         }
 
@@ -84,17 +93,10 @@ namespace OrderMgmnt.Web.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(OrderFilled));
+                return View("OrderFilled");
             }
 
             return View(model);
-        }
-
-
-        [HttpGet]
-        public IActionResult OrderFilled()
-        {
-            return View();
         }
     }
 }

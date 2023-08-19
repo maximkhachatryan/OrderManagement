@@ -26,6 +26,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index(OrderStatus? status)
         {
             var orders = await _context.Orders
+                .AsNoTracking()
                 .Include(o => o.VendorAddress)
                 .ThenInclude(a => a.Vendor)
                 .OrderBy(o => o.CreateDate)

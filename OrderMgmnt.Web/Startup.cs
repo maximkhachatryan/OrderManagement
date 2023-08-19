@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using OrderMgmnt.DAL;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,9 +16,21 @@ namespace OrderMgmnt.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+
+            // Get the path to the wwwroot folder
+            var contentRoot = env.ContentRootPath;
+            // Combine it with the "Images" folder
+            var imagesPath = Path.Combine(contentRoot, "Images");
+
+            // You can use 'imagesPath' to store and access your images.
+            // You might want to create the directory if it doesn't exist.
+            if (!Directory.Exists(imagesPath))
+            {
+                Directory.CreateDirectory(imagesPath);
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -84,6 +97,10 @@ namespace OrderMgmnt.Web
                     name: "Admin",
                     areaName: "Admin",
                     pattern: "Admin/{controller=AdminOrder}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "imageRoute",
+                    pattern: "image/{imageName}",
+                    defaults: new { controller = "Image", action = "GetImage" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
