@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrderMgmnt.Web.Areas.Admin.Models
 {
-    public class AdminVendorCreateModel
+    public class AdminVendorEditModel
     {
         public Guid Id { get; set; }
 
@@ -30,5 +30,8 @@ namespace OrderMgmnt.Web.Areas.Admin.Models
 
         [DisplayName("Վեբ կայքի հասցե")]
         public string WebsiteLink { get; set; }
+
+        [DisplayName("Բալանս")]
+        public decimal VendorWalletAmount { get; set; }
     }
 }

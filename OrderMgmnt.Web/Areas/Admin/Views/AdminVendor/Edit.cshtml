@@ -1,14 +1,12 @@
-﻿@model OrderMgmnt.DAL.Entities.Vendor
+﻿@model OrderMgmnt.Web.Areas.Admin.Models.AdminVendorEditModel
 
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Գործընկեր։ Խմբագրում</h1>
 
-<h4>Vendor</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -20,14 +18,14 @@
                 <span asp-validation-for="Code" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BrandName" class="control-label"></label>
-                <input asp-for="BrandName" class="form-control" />
-                <span asp-validation-for="BrandName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BrandName" class="control-label"></label>
+                <input asp-for="BrandName" class="form-control" />
+                <span asp-validation-for="BrandName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber1" class="control-label"></label>
@@ -55,14 +53,20 @@
                 <span asp-validation-for="VendorWalletAmount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label for="logoFile">Ընտրեք լոգոն</label>
+                <!-- Hide the default file input -->
+                <input type="file" id="logoFile" name="logoFile" class="form-control-file" />
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Պահպանել" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Վերադառնալ</a>
 </div>
 
 @section Scripts {

@@ -53,13 +53,34 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
             }
 
             var vendor = await _context.Vendors
+                .AsNoTracking()
+                .Include(v => v.Addresses)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vendor == null)
             {
                 return NotFound();
             }
 
-            return View(vendor);
+            return View(new AdminVendorDetailsModel
+            {
+                Id = vendor.Id,
+                Code = vendor.Code,
+                Name = vendor.Name,
+                BrandName = vendor.BrandName,
+                PhoneNumber1 = vendor.PhoneNumber1,
+                PhoneNumber2 = vendor.PhoneNumber2,
+                WebsiteLink = vendor.WebsiteLink,
+                InstagramLink = vendor.InstagramLink,
+                VendorWalletAmount = vendor.VendorWalletAmount,
+                Addresses = vendor.Addresses
+                    .Where(a=>a.IsRemoved == false)
+                    .Select(a=>new AdminVendorDetailsModel.AdminVendorAddressDetailsModel
+                    {
+                        Id = a.Id,
+                        District = a.District,
+                        AddressInfo = a.AddressInfo,
+                    })
+            });
         }
 
         // GET: Admin/Vendors/Create
@@ -117,7 +138,18 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(vendor);
+            return View(new AdminVendorEditModel
+            {
+                Id = vendor.Id,
+                Code = vendor.Code,
+                Name = vendor.Name,
+                BrandName = vendor.BrandName,
+                PhoneNumber1 = vendor.PhoneNumber1,
+                PhoneNumber2 = vendor.PhoneNumber2,
+                WebsiteLink = vendor.WebsiteLink,
+                InstagramLink = vendor.InstagramLink,
+                VendorWalletAmount = vendor.VendorWalletAmount
+            });
         }
 
         // POST: Admin/Vendors/Edit/5
@@ -125,34 +157,51 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Code,BrandName,Name,PhoneNumber1,PhoneNumber2,InstagramLink,WebsiteLink,VendorWalletAmount")] Vendor vendor)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Code,BrandName,Name,PhoneNumber1,PhoneNumber2,InstagramLink,WebsiteLink")] AdminVendorEditModel vendorDto, [FromForm] IFormFile logoFile)
         {
-            if (id != vendor.Id)
+            if (id != vendorDto.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
+                var vendor = new Vendor
                 {
-                    _context.Update(vendor);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+                    Id = vendorDto.Id,
+                    Code = vendorDto.Code,
+                    Name = vendorDto.Name,
+                    BrandName = vendorDto.BrandName,
+                    PhoneNumber1 = vendorDto.PhoneNumber1,
+                    PhoneNumber2 = vendorDto.PhoneNumber2,
+                    InstagramLink = vendorDto.InstagramLink,
+                    WebsiteLink = vendorDto.WebsiteLink
+                };
+
+                var uploaded = await UploadLogo(logoFile, id.ToString());
+                if (uploaded)
                 {
-                    if (!VendorExists(vendor.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(vendor);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!VendorExists(vendor.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(vendor);
+            return View(vendorDto);
         }
 
         // GET: Admin/Vendors/Delete/5
@@ -198,7 +247,7 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
 
                 var fullFileName = $"{filename}.png";
 
-                
+
                 // Combine the path with the unique file name
                 var filePath = Path.Combine(imagesPath, fullFileName);
 

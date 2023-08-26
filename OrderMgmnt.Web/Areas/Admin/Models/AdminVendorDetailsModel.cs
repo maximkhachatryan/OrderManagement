@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using static OrderMgmnt.DAL.Entities.VendorAddress;
 
 namespace OrderMgmnt.Web.Areas.Admin.Models
 {
-    public class AdminVendorCreateModel
+    public class AdminVendorDetailsModel
     {
         public Guid Id { get; set; }
 
@@ -30,5 +31,23 @@ namespace OrderMgmnt.Web.Areas.Admin.Models
 
         [DisplayName("Վեբ կայքի հասցե")]
         public string WebsiteLink { get; set; }
+
+        [DisplayName("Բալանս")]
+        public decimal VendorWalletAmount { get; set; }
+
+        [DisplayName("Հասցեներ")]
+        public IEnumerable<AdminVendorAddressDetailsModel> Addresses { get; set; }
+
+
+        public class AdminVendorAddressDetailsModel
+        {
+            public Guid Id { get; set; }
+
+            [DisplayName("Վարչական շրջան")]
+            public AdministrativeDistrict District { get; set; }
+
+            [DisplayName("Հասցե")]
+            public string AddressInfo { get; set; }
+        }
     }
 }
