@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using OrderMgmnt.Web.Areas.Admin.Models;
 
 namespace OrderMgmnt.Web.Areas.Admin.Controllers
@@ -15,6 +16,13 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class AuthController : Controller
     {
+        private readonly IConfiguration _configuration;
+
+        public AuthController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         // Display the login form
         [HttpGet]
         [AllowAnonymous]
@@ -31,13 +39,13 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.Username == "username" &&
-                    model.Password == "password")
+                if (model.Username == _configuration["Authentication:AdminUsername"] &&
+                    model.Password == _configuration["Authentication:AdminPassword"])
                 {
                     // Create a claims identity for the user
                     var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, "username")
+                    new Claim(ClaimTypes.Name, _configuration["Authentication:AdminUsername"])
                     // You can add additional claims here if needed
                 };
 

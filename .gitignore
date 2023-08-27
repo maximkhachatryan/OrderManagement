@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /OrderMgmnt.Web/Images
+/OrderMgmnt.Web/.secrets
