@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using OrderMgmnt.Web.Areas.Admin.Models;
 namespace OrderMgmnt.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class AdminVendorAddressController : Controller
     {
         private readonly OrderMgmntContext _context;

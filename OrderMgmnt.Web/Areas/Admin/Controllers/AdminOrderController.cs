@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrderMgmnt.DAL;
 using OrderMgmnt.DAL.Entities;
@@ -13,6 +14,7 @@ using static OrderMgmnt.DAL.Entities.VendorAddress;
 namespace OrderMgmnt.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class AdminOrderController : Controller
     {
         private readonly OrderMgmntContext _context;

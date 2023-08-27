@@ -1,0 +1,25 @@
+﻿<!-- Areas/Admin/Views/Auth/Login.cshtml -->
+@model OrderMgmnt.Web.Areas.Admin.Models.AdminLoginModel
+
+<form asp-controller="Auth" asp-action="Login" method="post">
+    <div class="form-group">
+        <label asp-for="Username" for="Username">Username:</label>
+        <input asp-for="Username" id="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password" for="Password">Password:</label>
+        <input asp-for="Password" id="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group form-check">
+        <input asp-for="RememberMe" id="RememberMe" class="form-check-input" />
+        <label class="form-check-label" for="RememberMe">Remember Me</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+
+    <span asp-validation-summary="All" class="text-danger"></span>
+</form>
