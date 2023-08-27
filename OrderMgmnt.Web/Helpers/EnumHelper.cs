@@ -62,5 +62,26 @@ namespace OrderMgmnt.Web.Helpers
             if (descriptionAttributes == null) return string.Empty;
             return (descriptionAttributes.Length > 0) ? descriptionAttributes[0].Name : value.ToString();
         }
+
+        public static Dictionary<string, T> GetDisplayNamesAndValues()
+        {
+            var enumType = typeof(T);
+            if (!enumType.IsEnum)
+            {
+                throw new ArgumentException("T must be an enumerated type");
+            }
+
+            var displayNamesAndValues = new Dictionary<string, T>();
+
+            foreach (var fieldInfo in enumType.GetFields(BindingFlags.Static | BindingFlags.Public))
+            {
+                var displayAttribute = fieldInfo.GetCustomAttribute<DisplayAttribute>();
+                var displayName = displayAttribute?.GetName() ?? fieldInfo.Name;
+                var enumValue = (T)fieldInfo.GetValue(null);
+                displayNamesAndValues.Add(displayName, enumValue);
+            }
+
+            return displayNamesAndValues;
+        }
     }
 }

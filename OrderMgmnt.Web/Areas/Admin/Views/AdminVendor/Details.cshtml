@@ -62,9 +62,10 @@
             @Html.DisplayFor(model => model.VendorWalletAmount)
         </dd>
         <dt class="col-sm-2">
-            <span>@Html.DisplayNameFor(model => model.Addresses)</span> |  
+            <span>@Html.DisplayNameFor(model => model.Addresses)</span>
+            <br />
             <span>
-                <a asp-action="AddVendorAddresses" asp-route-id="@Model.Id">
+                <a asp-controller="AdminVendorAddress" asp-action="Create" asp-route-vendorId="@Model.Id">
                     (նոր հասցե)
                 </a>
             </span>
@@ -75,9 +76,16 @@
                 @foreach (var address in Model.Addresses)
                 {
                     <li>
-                        <a asp-action="EditVendorAddresses" asp-route-id="@Model.Id">
+                        <a asp-controller="AdminVendorAddress"
+                           asp-action="Edit"
+                           asp-route-id="@address.Id">
                             @($"ք․ Երևան, {EnumHelper<VendorAddress.AdministrativeDistrict>.GetDisplayValue(address.District)}, {address.AddressInfo}")
-                        </a>
+                        </a> | 
+                        <a asp-controller="AdminVendorAddress"
+                           asp-action="Delete"
+                           asp-route-id="@address.Id"
+                           style="color: red"
+                           >Հեռացնել</a>
                     </li>
                 }
             </ul>

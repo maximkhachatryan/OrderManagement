@@ -230,6 +230,9 @@ namespace OrderMgmnt.Web.Areas.Admin.Controllers
             var vendor = await _context.Vendors.FindAsync(id);
             _context.Vendors.Remove(vendor);
             await _context.SaveChangesAsync();
+
+            // TODO: Remove logo
+
             return RedirectToAction(nameof(Index));
         }
 

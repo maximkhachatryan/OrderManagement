@@ -1,0 +1,52 @@
+﻿@model OrderMgmnt.Web.Areas.Admin.Models.AdminVendorAddressCreateEditModel
+
+@{
+    ViewData["Title"] = "Նոր գործընկերոջ հասցե";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    @using OrderMgmnt.Web.Helpers
+    @using static OrderMgmnt.DAL.Entities.VendorAddress
+
+    var districtDictionary = EnumHelper<AdministrativeDistrict>.GetDisplayNamesAndValues();
+}
+
+
+
+<h1>Նոր գործընկերոջ հասցե</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-route-vendorId="@ViewBag.VendorId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="District" class="control-label"></label>
+                <select asp-for="District" class="form-control">
+                    <option value="">-- Ընտրեք տարածաշրջան --</option>
+                    @foreach (var kvp in districtDictionary)
+                    {
+                        <option value="@kvp.Value.ToString()">@kvp.Key</option>
+                    }
+                </select>
+                <span asp-validation-for="District" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressInfo" class="control-label"></label>
+                <input asp-for="AddressInfo" class="form-control" />
+                <span asp-validation-for="AddressInfo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Ստեղծել" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="AdminVendor" asp-action="Details" asp-route-id="@ViewBag.VendorId">Վերադառնալ</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
